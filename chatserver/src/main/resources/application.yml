@@ -9,3 +9,8 @@ spring:
       ddl-auto: update
     show-sql: true
     database: postgresql
+  jwt:
+  #  chatserversecretaccesstokenchatserversecretaccesstokenchatserversecretaccesstoken
+    secretKey: Y2hhdHNlcnZlcnNlY3JldGFjY2Vzc3Rva2VuY2hhdHNlcnZlcnNlY3JldGFjY2Vzc3Rva2VuY2hhdHNlcnZlcnNlY3JldGFjY2Vzc3Rva2Vu
+    # secretKey : ${JWT_SECRET_KEY}
+    expiration: 3000 # 3000?
