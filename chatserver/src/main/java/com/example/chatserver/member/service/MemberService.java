@@ -1,8 +1,8 @@
-package com.example.chatserver.service;
+package com.example.chatserver.member.service;
 
-import com.example.chatserver.domain.Member;
-import com.example.chatserver.dto.MemberSaveReqDto;
-import com.example.chatserver.repository.MemberRepository;
+import com.example.chatserver.member.domain.Member;
+import com.example.chatserver.member.dto.MemberSaveReqDto;
+import com.example.chatserver.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +15,13 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public Member create(MemberSaveReqDto requestDto) {
+    public Member create(@RequestBody MemberSaveReqDto requestDto) {
 
         String name = requestDto.getName();
         String email = requestDto.getEmail();
         String password = requestDto.getPassword();
 
-        if(memberRepository.existsByEmail(email)){
+        if (memberRepository.existsByEmail(email)) {
             throw new IllegalArgumentException("이미 존재하는 이메일 입니다.");
         }
 
