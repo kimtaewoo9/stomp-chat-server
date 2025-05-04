@@ -1,7 +1,6 @@
 package com.example.chatserver.common.configs;
 
 import com.example.chatserver.common.auth.JwtAuthFilter;
-import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,14 +23,19 @@ public class SecurityConfigs {
     private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
-    public SecurityFilterChain myFilter(HttpSecurity httpSecurity) throws Exception{
+    public SecurityFilterChain myFilter(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable) // csrf 비활성화 토큰 기반 인증을 사용하므로 필요 없음 .
-            .httpBasic(AbstractHttpConfigurer::disable) // 사용자 이름과 비밀번호를 Base64로 인코딩 하여 전송하는 것 .. 필요 없음 .
-            .authorizeHttpRequests(a -> a.requestMatchers("/member/create", "/member/doLogin", "/connect/**").permitAll().anyRequest().authenticated())
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 사용하여 상태를 저장하는 것을 하지 않음 .
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+            .httpBasic(
+                AbstractHttpConfigurer::disable) // 사용자 이름과 비밀번호를 Base64로 인코딩 하여 전송하는 것 .. 필요 없음 .
+            .authorizeHttpRequests(
+                a -> a.requestMatchers("/member/create", "/member/doLogin", "/connect/**")
+                    .permitAll().anyRequest().authenticated())
+            .sessionManagement(s -> s.sessionCreationPolicy(
+                SessionCreationPolicy.STATELESS)) // 세션을 사용하여 상태를 저장하는 것을 하지 않음 .
+            .addFilterBefore(jwtAuthFilter,
+                UsernamePasswordAuthenticationFilter.class) // 사실상 이게 핵심 .. 이거 구현 해야함 .
             .build();
     }
 
@@ -50,7 +54,7 @@ public class SecurityConfigs {
     }
 
     @Bean
-    public PasswordEncoder makePassword(){
+    public PasswordEncoder makePassword() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
