@@ -1,6 +1,5 @@
 package com.example.chatserver.member.service;
 
-import com.example.chatserver.common.configs.SecurityConfigs;
 import com.example.chatserver.member.domain.Member;
 import com.example.chatserver.member.dto.MemberLoginReqDto;
 import com.example.chatserver.member.dto.MemberSaveReqDto;
@@ -40,13 +39,13 @@ public class MemberService {
         return savedMember;
     }
 
-    public Member doLogin(MemberLoginReqDto loginDto){
+    public Member doLogin(MemberLoginReqDto loginDto) {
         String loginEmail = loginDto.getEmail();
         String loginPassword = loginDto.getPassword();
 
         Member member = memberRepository.findByEmail(loginEmail).orElseThrow(
             () -> new EntityNotFoundException("존재하지 않는 이메일 입니다."));
-        if(!passwordEncoder.matches(member.getPassword(), loginPassword)){
+        if (!passwordEncoder.matches(member.getPassword(), loginPassword)) {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
