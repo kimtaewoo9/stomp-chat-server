@@ -2,6 +2,7 @@ package com.example.chatserver.common.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.GenericFilter;
 import jakarta.servlet.ServletException;
@@ -10,6 +11,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.security.sasl.AuthenticationException;
@@ -47,11 +49,11 @@ public class JwtAuthFilter extends GenericFilter {
                 String jwtToken = token.substring(7);
 
                 // 검증 및 claims 추출
-                Claims claims = Jwts.parserBuilder() // jwt parser를 통해 검증함 .
-                    .setSigningKey(secretKey)
+                Claims claims = Jwts.parser()
+                    .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
                     .build()
-                    .parseClaimsJws(jwtToken) // 헤더와 페이로드 결합하고 비밀키로 서명한 결과가 토큰의 서명 부분과 일치하는지 확인함 .
-                    .getBody(); // 사용자의 이메일이 뭔지 알아낼 수 있음 .
+                    .parseSignedClaims(jwtToken)
+                    .getPayload();
 
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + claims.get("role")));
