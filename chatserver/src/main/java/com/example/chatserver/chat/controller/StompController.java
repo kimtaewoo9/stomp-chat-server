@@ -14,10 +14,10 @@ public class StompController {
     private final SimpMessageSendingOperations simpMessageSendingOperations;
 
     @MessageMapping("/{roomId}")
-    public void sendMessage(@DestinationVariable Long roomId, ChatMessageDto chatMessageDto){
+    public void sendMessage(@DestinationVariable Long roomId, ChatMessageDto chatMessageDto) {
 
         // 자바 객체를 메시지로 변환하여 전송할 수 있게 해줌 . (/topic/roomId로 메시지를 라우팅)
-        simpMessageSendingOperations.convertAndSend("/topic/"+roomId, chatMessageDto);
+        simpMessageSendingOperations.convertAndSend("/topic/" + roomId, chatMessageDto);
 
     }
 }
