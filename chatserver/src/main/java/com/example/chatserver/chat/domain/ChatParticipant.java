@@ -32,6 +32,4 @@ public class ChatParticipant extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private ChatRoom chatRoom;
-
-    
 }
