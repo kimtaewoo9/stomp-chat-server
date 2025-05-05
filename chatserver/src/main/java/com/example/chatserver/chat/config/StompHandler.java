@@ -1,5 +1,6 @@
 package com.example.chatserver.chat.config;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -34,6 +35,21 @@ public class StompHandler implements ChannelInterceptor {
                 .parseSignedClaims(jwtToken) // signed claim -> 서명된 클레임 정보를 담고 있는 객체 .
                 .getPayload();
             log.info("token 검증 완료");
+        }else if(accessor.getCommand() == StompCommand.SUBSCRIBE){
+            log.info("subscribe 요청시 토큰 유효성 검증 ..");
+            String bearerToken = accessor.getFirstNativeHeader("Authorization");
+            String jwtToken = bearerToken.substring(7);
+            Claims claims = Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+                .build()
+                .parseSignedClaims(jwtToken)
+                .getPayload();
+            // room 에 대한 권한이 있는지 subscribe할때 확인해야함 .
+            String email = claims.getSubject(); // subject에서 email 얻을 수 있음 .
+            String roomId = accessor.getDestination().split("/")[2];
+            log.info("token 검증 완료");
         }
+
+        return message;
     }
 }
