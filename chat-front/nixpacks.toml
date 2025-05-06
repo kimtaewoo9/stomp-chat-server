@@ -1,4 +1,6 @@
-providers = ["node"]
+[phases.setup]
+nixPkgs = ["nodejs", "corepack"]
+cmds = ["corepack enable", "corepack prepare pnpm@9.1.0 --activate"]
 
 [phases.install]
-cmds = ["npm install -g corepack", "corepack enable", "corepack prepare pnpm@9.1.0 --activate", "pnpm install"]
+cmds = ["pnpm install"]
