@@ -14,6 +14,7 @@ import com.example.chatserver.member.domain.Member;
 import com.example.chatserver.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -97,5 +98,28 @@ public class ChatService {
                 .roomName(chatRoom.getName())
                 .build())
             .toList();
+    }
+
+    public void addParticipantToGroupChat(Long id) {
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(
+            () -> new EntityNotFoundException("chat room not found")
+        );
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findByEmail(email).orElseThrow(
+            () -> new EntityNotFoundException("member not found")
+        );
+
+        // 이미 참여자인지 검증
+        if(chatParticipantsRepository.existsByChatRoomAndMember(chatRoom, member)){
+            throw new IllegalArgumentException("Member already exists");
+        }
+
+        ChatParticipant chatParticipant = ChatParticipant.builder()
+            .chatRoom(chatRoom)
+            .member(member)
+            .build();
+        chatParticipantsRepository.save(chatParticipant);
+        chatRoom.getChatParticipants().add(chatParticipant);
     }
 }
