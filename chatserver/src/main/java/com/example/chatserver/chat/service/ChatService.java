@@ -122,4 +122,40 @@ public class ChatService {
         chatParticipantsRepository.save(chatParticipant);
         chatRoom.getChatParticipants().add(chatParticipant);
     }
+
+    public List<ChatMessageDto> getChatHistory(Long id) {
+        // TODO 내가 참여한 시간 이후의 history만 가져와야함.
+        // 내가 해당 채팅방의 참여자가 아닐 경우 에러 .
+        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(
+            () -> new EntityNotFoundException("chat room not found")
+        );
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findByEmail(email).orElseThrow(
+            () -> new EntityNotFoundException("member not found")
+        );
+        if(!chatParticipantsRepository.existsByChatRoomAndMember(chatRoom, member)){
+            throw new IllegalArgumentException("cannot access");
+        }
+
+        List<ChatMessage> chatMessages = chatMessageRepository.findByChatRoomOrderByCreatedTimeAsc(chatRoom);
+        return chatMessages.stream()
+            .map(message -> ChatMessageDto.builder()
+                .senderEmail(message.getMember().getEmail())
+                .message(message.getContent())
+                .build())
+            .toList();
+    }
+
+    public boolean isParticipant(String email, Long roomId) {
+        Member member = memberRepository.findByEmail(email).orElseThrow(
+            () -> new EntityNotFoundException("member not found")
+        );
+
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElseThrow(
+            () -> new EntityNotFoundException("chat room not found")
+        );
+
+        return chatParticipantsRepository.existsByChatRoomAndMember(chatRoom, member);
+    }
 }

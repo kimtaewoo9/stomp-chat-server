@@ -1,6 +1,7 @@
 package com.example.chatserver.chat.controller;
 
 import com.example.chatserver.chat.domain.ChatRoom;
+import com.example.chatserver.chat.dto.ChatMessageDto;
 import com.example.chatserver.chat.dto.ChatRoomResponseDto;
 import com.example.chatserver.chat.service.ChatService;
 import java.util.List;
@@ -37,5 +38,12 @@ public class ChatController {
         chatService.addParticipantToGroupChat(id);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/chat/history/{roomId}")
+    public ResponseEntity<?> getChatHistory(@PathVariable Long id){
+        List<ChatMessageDto> chatMessageDto = chatService.getChatHistory(id);
+
+        return ResponseEntity.ok(chatMessageDto);
     }
 }
