@@ -1,12 +1,13 @@
 package com.example.chatserver.chat.controller;
 
-import com.example.chatserver.chat.domain.ChatRoom;
 import com.example.chatserver.chat.dto.ChatMessageDto;
 import com.example.chatserver.chat.dto.ChatRoomResponseDto;
+import com.example.chatserver.chat.dto.MyChatRoomResponseDto;
 import com.example.chatserver.chat.service.ChatService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,4 +47,29 @@ public class ChatController {
 
         return ResponseEntity.ok(chatMessageDto);
     }
+
+    // 메시지 읽음 처리 .. -> disconnect 시점에 채팅방에 있는 메시지들 전부 읽음 처리 .
+    // 채팅룸 ID를 주면서 "나 그 채팅방에 있는 메시지 전부 읽었어" 라고 전달
+    @PostMapping("/chat/room/{roomId}/read")
+    public ResponseEntity<?> readAllMessages(@PathVariable Long id){
+        chatService.readAllMessages(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 내 채팅방 목록 조회 dto roomId, roomName, 읽지 않은 메시지 개수, group 채팅 여부 .
+    @GetMapping("/chat/my/rooms")
+    public ResponseEntity<?> getMyChatRooms(){
+
+        List<MyChatRoomResponseDto> myChatRoomListResponseDtos = chatService.getMyChatRooms();
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/chat/room/{roomId}/leave")
+    public ResponseEntity<?> leaveGroupChatroom(@PathVariable Long roomId){
+        chatService.leaveGroupChatRoom(roomId);
+
+        return ResponseEntity.ok().build();
+    }
+
 }
