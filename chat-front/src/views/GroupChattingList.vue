@@ -75,6 +75,7 @@ export default{
     methods: {
         async joinChatRoom(roomId){
             await axios.post(`${process.env.VUE_APP_API_BASE_URL}/chat/room/group/${roomId}/join`);
+            // 참여한 다음 .. 그 채팅 화면으로 이동
             this.$router.push(`/chatpage/${roomId}`);
         },
         async createChatRoom(){
