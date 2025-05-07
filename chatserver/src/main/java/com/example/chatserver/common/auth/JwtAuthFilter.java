@@ -2,7 +2,6 @@ package com.example.chatserver.common.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.GenericFilter;
 import jakarta.servlet.ServletException;
@@ -11,7 +10,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import javax.security.sasl.AuthenticationException;
@@ -50,11 +48,12 @@ public class JwtAuthFilter extends GenericFilter {
                 String jwtToken = token.substring(7);
 
                 // 검증 및 claims 추출
-                Claims claims = Jwts.parser()
-                    .verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8)))
+
+                Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
                     .build()
-                    .parseSignedClaims(jwtToken)
-                    .getPayload();
+                    .parseClaimsJws(jwtToken)
+                    .getBody();
 
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + claims.get("role")));

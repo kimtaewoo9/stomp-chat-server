@@ -51,7 +51,7 @@ public class SecurityConfigs {
     }
 
     @Bean
-    public PasswordEncoder makePassword() {
+    public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
