@@ -105,13 +105,17 @@ public class ChatService {
         ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(
             () -> new EntityNotFoundException("chat room not found")
         );
+        // 개인 채팅방이면 못들어감 .
+        if(chatRoom.getIsGroupChat().equals("N")){
+            throw new IllegalArgumentException("cannot access");
+        }
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Member member = memberRepository.findByEmail(email).orElseThrow(
             () -> new EntityNotFoundException("member not found")
         );
 
-        // 이미 참여자인지 검증
+        // 이미 참여자인지 검증 .. TODO 이미 참여자이면 채팅방 화면으로 이동 .
         if(chatParticipantRepository.existsByChatRoomAndMember(chatRoom, member)){
             throw new IllegalArgumentException("Member already exists");
         }
@@ -227,5 +231,18 @@ public class ChatService {
         if(participantsCount == 0){
             chatRoomRepository.delete(chatRoom);
         }
+    }
+
+    public Long getOrCreatePrivateRoom(Long otherMemberId) {
+        // 만약에 채팅방 있으면 .. 그 채팅방의 Id를 가져옴 .
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Member member = memberRepository.findByEmail(email).orElseThrow(
+            () -> new EntityNotFoundException("member not found")
+        );
+        Member otherMember = memberRepository.findById(otherMemberId).orElseThrow(
+            () -> new EntityNotFoundException("other member not found")
+        );
+
+
     }
 }
