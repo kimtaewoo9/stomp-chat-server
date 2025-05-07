@@ -47,7 +47,7 @@ export default{
             const token = response.data.token;
             const role = jwtDecode(token).role;
             const email = jwtDecode(token).sub;
-            localStorage.setItem("token", token);
+            localStorage.setItem("token", token); // 토큰 받아서 localStorage에 저장함 .
             localStorage.setItem("role", role);
             localStorage.setItem("email", email);
             window.location.href="/";

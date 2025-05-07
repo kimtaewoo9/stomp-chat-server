@@ -105,8 +105,8 @@ public class ChatService {
             .toList();
     }
 
-    public void addParticipantToGroupChat(Long id) {
-        ChatRoom chatRoom = chatRoomRepository.findById(id).orElseThrow(
+    public void addParticipantToGroupChat(Long roomId) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElseThrow(
             () -> new EntityNotFoundException("chat room not found")
         );
         // 개인 채팅방이면 못들어감 .
@@ -122,7 +122,7 @@ public class ChatService {
         // 이미 참여자인지 검증 .. TODO 이미 참여자이면 채팅방 화면으로 이동 .
         Optional<ChatParticipant> participant = chatParticipantRepository.
             findByChatRoomAndMember(chatRoom, member);
-        if (!participant.isPresent()) {
+        if (participant.isEmpty()) {
             addParticipantToRoom(chatRoom, member);
         }
     }
@@ -192,8 +192,6 @@ public class ChatService {
     }
 
     public List<MyChatRoomResponseDto> getMyChatRooms() {
-        log.info("[나의 그룹 채팅 목록 가져오기]");
-
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Member currentMember = memberRepository.findByEmail(email).orElseThrow(
             () -> new EntityNotFoundException("member not found")
@@ -210,7 +208,6 @@ public class ChatService {
 
             // 여기서 개인 채팅방 이름 정하기 .
             if (currentChatRoom.getIsGroupChat().equals("N")) {
-                log.info("나의 채팅방 목록 조회-개인 채팅방");
                 List<ChatParticipant> participants =
                     chatParticipantRepository.findByChatRoom(currentChatRoom);
                 Member otherMember = participants.stream()
@@ -229,7 +226,6 @@ public class ChatService {
                     .build();
                 myChatRoomResponseDtos.add(responseDto);
             } else {
-                log.info("나의 채팅방 목록 조회-단체 채팅방");
                 MyChatRoomResponseDto responseDto = MyChatRoomResponseDto.builder()
                     .roomId(currentChatRoom.getId())
                     .roomName(currentChatRoom.getName())

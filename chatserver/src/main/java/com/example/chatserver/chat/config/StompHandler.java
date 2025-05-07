@@ -39,31 +39,27 @@ public class StompHandler implements ChannelInterceptor {
                 .getBody();
             log.info("token 검증 완료");
         }
-
         // subscribe 할때도 토큰 보내도록 설정한 다음에 검증 ..
         if (accessor.getCommand() == StompCommand.SUBSCRIBE) {
             log.info("subscribe 요청시 토큰 유효성 검증 ..");
             String bearerToken = accessor.getFirstNativeHeader("Authorization");
             String jwtToken = bearerToken.substring(7);
-            
+
             Claims claims = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(jwtToken)
                 .getBody();
-
+            log.info("token 검증 완료");
             // room 에 대한 권한이 있는지 subscribe할때 확인해야함 .
             String email = claims.getSubject(); // subject에서 email 얻을 수 있음 .
-
             // getDestination 으로 엔드포인트를 가져올 수 있음 .
             // /topic/${this.roomId}
             String roomId = accessor.getDestination().split("/")[2];
 
-            if (chatService.isParticipant(email, Long.parseLong(roomId))) {
+            if (!chatService.isParticipant(email, Long.parseLong(roomId))) {
                 throw new IllegalArgumentException("permission denied: not a participant");
             }
-
-            log.info("token 검증 완료");
         }
 
         return message;

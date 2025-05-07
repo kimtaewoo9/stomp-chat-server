@@ -20,11 +20,9 @@ public class StompController {
 
     @MessageMapping("/{roomId}")
     public void sendMessage(@DestinationVariable Long roomId, ChatMessageDto chatMessageDto) {
-
-        // 자바 객체를 메시지로 변환하여 전송할 수 있게 해줌 . (/topic/roomId로 메시지를 라우팅)
         log.info(chatMessageDto.getMessage());
         chatService.saveMessage(roomId, chatMessageDto);
+        chatMessageDto.setRoomId(roomId);
         simpMessageSendingOperations.convertAndSend("/topic/" + roomId, chatMessageDto);
-
     }
 }
