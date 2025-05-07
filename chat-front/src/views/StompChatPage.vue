@@ -9,9 +9,9 @@
                     <v-card-text>
                         <div class="chat-box">
                             <div 
-                             v-for="(msg, index) in messages"
-                             :key="index"
-                             :class="['chat-message', msg.senderEmail ===this.senderEmail ? 'sent' : 'received' ]"
+                                v-for="(msg, index) in messages"
+                                :key="index"
+                                :class="['chat-message', msg.senderEmail ===this.senderEmail ? 'sent' : 'received' ]"
                             >
                                 <strong>{{ msg.senderEmail }}: </strong> {{ msg.message }}
                             </div>
