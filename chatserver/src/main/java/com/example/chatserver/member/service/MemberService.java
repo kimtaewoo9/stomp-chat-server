@@ -8,6 +8,7 @@ import com.example.chatserver.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,7 +59,10 @@ public class MemberService {
     public List<MemberResponseDto> getMemberList() {
         List<Member> members = memberRepository.findAll();
 
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+
         return members.stream()
+            .filter(member -> !member.getEmail().equals(email))
             .map(member -> MemberResponseDto.builder()
                 .id(member.getId())
                 .name(member.getName())
