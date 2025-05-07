@@ -39,7 +39,9 @@ public class SecurityConfigs {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of(
+            "http://localhost:3000",
+            "https://https://stomp-chat-server.up.railway.app"));
         configuration.setAllowedMethods(List.of("*")); // 모든 Http 메서드 허용
         configuration.setAllowedHeaders(List.of("*")); // 모든 header 값 허용 .
         configuration.setAllowCredentials(true); // 인증 정보를 포함한 요청 허용 !.
