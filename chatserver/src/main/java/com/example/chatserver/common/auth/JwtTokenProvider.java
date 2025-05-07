@@ -1,13 +1,12 @@
 package com.example.chatserver.common.auth;
 
 import com.example.chatserver.member.domain.Role;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -28,17 +27,15 @@ public class JwtTokenProvider {
     }
 
     public String createToken(String email, Role role) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", email);
+        Claims claims = Jwts.claims().setSubject(email);
         claims.put("role", role);
         Date now = new Date();
-
-        String token = Jwts.builder() // Jwts.builder를 사용하면 기본적으로 헤더를 설정해줌.
-            .claims(claims)
-            .issuedAt(now) // 토큰 발행 시간 .
-            .expiration(new Date(now.getTime() + expiration * 60 * 1000L)) // 만료 일자 설정 .
+        // Jwts.builder를 사용하면 기본적으로 헤더를 설정해줌.
+        return Jwts.builder() // Jwts.builder를 사용하면 기본적으로 헤더를 설정해줌.
+            .setClaims(claims)
+            .setIssuedAt(now)
+            .setExpiration(new Date(now.getTime() + expiration * 60 * 1000L))
             .signWith(SECRET_KEY)
             .compact();
-        return token;
     }
 }
