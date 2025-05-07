@@ -2,9 +2,11 @@ package com.example.chatserver.member.service;
 
 import com.example.chatserver.member.domain.Member;
 import com.example.chatserver.member.dto.MemberLoginReqDto;
+import com.example.chatserver.member.dto.MemberResponseDto;
 import com.example.chatserver.member.dto.MemberSaveReqDto;
 import com.example.chatserver.member.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,5 +53,17 @@ public class MemberService {
         }
 
         return member;
+    }
+
+    public List<MemberResponseDto> getMemberList() {
+        List<Member> members = memberRepository.findAll();
+
+        return members.stream()
+            .map(member -> MemberResponseDto.builder()
+                .id(member.getId())
+                .name(member.getName())
+                .email(member.getEmail())
+                .build())
+            .toList();
     }
 }

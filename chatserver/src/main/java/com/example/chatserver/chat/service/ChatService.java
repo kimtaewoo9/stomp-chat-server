@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ChatService {
 
     private final ChatRoomRepository chatRoomRepository;
@@ -118,16 +120,20 @@ public class ChatService {
         );
 
         // 이미 참여자인지 검증 .. TODO 이미 참여자이면 채팅방 화면으로 이동 .
-        if (chatParticipantRepository.existsByChatRoomAndMember(chatRoom, member)) {
-            throw new IllegalArgumentException("Member already exists");
+        Optional<ChatParticipant> participant = chatParticipantRepository.
+            findByChatRoomAndMember(chatRoom, member);
+        if (!participant.isPresent()) {
+            addParticipantToRoom(chatRoom, member);
         }
+    }
 
+    public void addParticipantToRoom(ChatRoom chatRoom, Member member) {
         ChatParticipant chatParticipant = ChatParticipant.builder()
             .chatRoom(chatRoom)
             .member(member)
             .build();
-        chatParticipantRepository.save(chatParticipant);
         chatRoom.getChatParticipants().add(chatParticipant);
+        chatParticipantRepository.save(chatParticipant);
     }
 
     public List<ChatMessageDto> getChatHistory(Long id) {
@@ -186,13 +192,15 @@ public class ChatService {
     }
 
     public List<MyChatRoomResponseDto> getMyChatRooms() {
+        log.info("[나의 그룹 채팅 목록 가져오기]");
+
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Member currentMember = memberRepository.findByEmail(email).orElseThrow(
             () -> new EntityNotFoundException("member not found")
         );
 
-        List<ChatParticipant> chatParticipants = chatParticipantRepository.findByMember(
-            currentMember);
+        List<ChatParticipant> chatParticipants = chatParticipantRepository
+            .findByMember(currentMember);
         List<MyChatRoomResponseDto> myChatRoomResponseDtos = new ArrayList<>();
         for (ChatParticipant participant : chatParticipants) {
             ChatRoom currentChatRoom = participant.getChatRoom();
@@ -202,6 +210,7 @@ public class ChatService {
 
             // 여기서 개인 채팅방 이름 정하기 .
             if (currentChatRoom.getIsGroupChat().equals("N")) {
+                log.info("나의 채팅방 목록 조회-개인 채팅방");
                 List<ChatParticipant> participants =
                     chatParticipantRepository.findByChatRoom(currentChatRoom);
                 Member otherMember = participants.stream()
@@ -213,15 +222,16 @@ public class ChatService {
                     );
 
                 MyChatRoomResponseDto responseDto = MyChatRoomResponseDto.builder()
-                    .id(currentChatRoom.getId())
+                    .roomId(currentChatRoom.getId())
                     .roomName(otherMember.getName() + "과의 채팅방")
                     .isGroupChat(currentChatRoom.getIsGroupChat())
                     .unReadCount(unReadCount)
                     .build();
                 myChatRoomResponseDtos.add(responseDto);
             } else {
+                log.info("나의 채팅방 목록 조회-단체 채팅방");
                 MyChatRoomResponseDto responseDto = MyChatRoomResponseDto.builder()
-                    .id(currentChatRoom.getId())
+                    .roomId(currentChatRoom.getId())
                     .roomName(currentChatRoom.getName())
                     .isGroupChat(currentChatRoom.getIsGroupChat())
                     .unReadCount(unReadCount)
@@ -290,15 +300,5 @@ public class ChatService {
         addParticipantToRoom(savaedPrivateChatRoom, otherMember);
 
         return savaedPrivateChatRoom.getId();
-    }
-
-    public void addParticipantToRoom(ChatRoom chatRoom, Member member) {
-        ChatParticipant chatParticipant = ChatParticipant.builder()
-            .chatRoom(chatRoom)
-            .member(member)
-            .build();
-        
-        chatRoom.getChatParticipants().add(chatParticipant);
-        chatParticipantRepository.save(chatParticipant);
     }
 }

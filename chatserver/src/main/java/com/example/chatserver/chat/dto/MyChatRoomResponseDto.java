@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class MyChatRoomResponseDto {
 
-    private Long id;
+    private Long roomId;
     private String roomName;
     private String isGroupChat;
     private Long unReadCount;
