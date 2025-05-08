@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     # railway 서버
-    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    url: jdbc:postgresql://${RAILWAY_PRIVATE_DOMAIN}:${PGPORT}/${PGDATABASE}
     username: ${PGUSER}
     password: ${PGPASSWORD}
   jpa:
