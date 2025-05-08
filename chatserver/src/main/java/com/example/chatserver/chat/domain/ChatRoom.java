@@ -33,8 +33,10 @@ public class ChatRoom extends BaseTimeEntity {
     private String isGroupChat = "N"; // TODO RoomType enum 으로 변경
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<ChatParticipant> chatParticipants = new ArrayList<>();
 
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @Builder.Default
     private List<ChatMessage> chatMessages = new ArrayList<>();
 }
