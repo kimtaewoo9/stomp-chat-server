@@ -44,7 +44,7 @@ export default{
             stompClient: null,
             token: "",
             senderEmail: null,
-            sendName: null,
+            senderName: null,
             roomId: null
         }
     },
