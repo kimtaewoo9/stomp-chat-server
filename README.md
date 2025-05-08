@@ -1,6 +1,6 @@
 ## 웹소켓/STOMP를 활용한 채팅서비스(spring, vue, redis)
 
-#### 기술 스택
+#### 🔧 기술 스택
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
 ![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
@@ -14,6 +14,8 @@
 ![Vue Router](https://img.shields.io/badge/Vue_Router-41B883?style=for-the-badge&logo=vue.js&logoColor=white)
 ![SockJS](https://img.shields.io/badge/SockJS-000000?style=for-the-badge&logo=socket.io&logoColor=white)
 
+
+#### 📝 개요
 Spring Boot와 Vue.js를 활용한 실시간 채팅 서비스로,
 
 웹소켓과 STOMP 프로토콜을 기반으로 1:1 채팅 및 그룹 채팅 기능을 제공합니다.
@@ -42,7 +44,7 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
     <img width="919" alt="image" src="https://github.com/user-attachments/assets/673134df-0314-4622-839b-0183bdb5ca66" />
 </details>
 
-## 개발 주요 API 목록
+## ✅ 개발 주요 API 목록
 - stomp 통신 후 메시지 DB 저장
 - 그룹채팅관련
   - 그룹채팅방 개설
