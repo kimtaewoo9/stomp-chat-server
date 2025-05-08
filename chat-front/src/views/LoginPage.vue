@@ -22,11 +22,24 @@
                             </v-text-field>
                             <v-btn type="submit" color="primary" block>로그인</v-btn>
                         </v-form>
+                        
+                        <!-- 구분선 추가 -->
+                        <v-divider class="my-4"></v-divider>
+                        
+                        <!-- 회원가입 버튼 추가 -->
+                        <v-btn 
+                            block 
+                            variant="outlined" 
+                            color="primary" 
+                            class="mt-2"
+                            @click="goToSignup"
+                        >
+                            회원가입
+                        </v-btn>
                     </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
-
     </v-container>
 </template>
 
@@ -51,9 +64,11 @@ export default{
             localStorage.setItem("role", role);
             localStorage.setItem("email", email);
             window.location.href="/";
+        },
+        goToSignup() {
+            // 회원가입 페이지로 이동
+            this.$router.push('/member/create');
         }
     }
 }
-
-
 </script>
