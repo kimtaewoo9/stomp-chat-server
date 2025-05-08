@@ -156,6 +156,7 @@ public class ChatService {
         return chatMessages.stream()
             .map(message -> ChatMessageDto.builder()
                 .senderEmail(message.getMember().getEmail())
+                .senderName(message.getMember().getName())
                 .message(message.getContent())
                 .createdAt(message.getCreatedTime())
                 .build())
