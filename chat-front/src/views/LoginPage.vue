@@ -64,19 +64,28 @@ export default{
     },
     methods:{
         async doLogin(){
-            const loginData = {email:this.email, password:this.password};
-            const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/member/doLogin`, loginData);
-            const token = response.data.token;
-            const role = jwtDecode(token).role;
-            const email = jwtDecode(token).sub;
-            localStorage.setItem("token", token); // 토큰 받아서 localStorage에 저장함 .
-            localStorage.setItem("role", role);
-            localStorage.setItem("email", email);
-            window.location.href="/";
+            try{
+                const loginData = {email:this.email, password:this.password};
+                const response = await axios.post(`${process.env.VUE_APP_API_BASE_URL}/member/doLogin`, loginData);
+                const token = response.data.token;
+                const role = jwtDecode(token).role;
+                const email = jwtDecode(token).sub;
+                localStorage.setItem("token", token); // 토큰 받아서 localStorage에 저장함 .
+                localStorage.setItem("role", role);
+                localStorage.setItem("email", email);
+                window.location.href="/";
 
-            // 리다이렉트 정보가 있으면 해당 페이지로, 없으면 홈으로 이동
-            const redirectPath = this.$route.query.redirect || '/';
-            this.$router.push(redirectPath);
+                // 리다이렉트 정보가 있으면 해당 페이지로, 없으면 홈으로 이동
+                const redirectPath = this.$route.query.redirect || '/';
+                this.$router.push(redirectPath);
+            } catch(error){
+                console.error('로그인 오류:', error);
+                let errorMessage = '이메일과 비밀번호를 확인해주세요.';
+
+                alert(errorMessage);
+                
+                this.password = '';
+            }
         },
         goToSignup() {
             // 회원가입 페이지로 이동
