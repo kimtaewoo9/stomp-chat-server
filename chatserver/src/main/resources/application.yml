@@ -1,17 +1,15 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres.railway.internal:5432/railway # private 주소와 연결
-
-    username: postgres
-    password: rySAHDjVbXlObNlCDDkbEvbFeIkZGWys
+    # railway 서버
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
     database: postgresql
 jwt:
-  secretKey: Y2hhdHNlcnZlcnNlY3JldGFjY2Vzc3Rva2VuY2hhdHNlcnZlcnNlY3JldGFjY2Vzc3Rva2VuY2hhdHNlcnZlcnNlY3JldGFjY2Vzc3Rva2Vu
-  # secretKey : ${JWT_SECRET_KEY}
-  # chatserversecretaccesstokenchatserversecretaccesstokenchatserversecretaccesstoken
-  expiration: 3000 # 3000?
+  secretKey: ${JWT_SECRET_KEY}
+  expiration: 3000
