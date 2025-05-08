@@ -72,6 +72,14 @@ public class ChatService {
         return savedMessage;
     }
 
+    public String findMemberNameByEmail(String email){
+        Member member = memberRepository.findByEmail(email).orElseThrow(
+            () -> new EntityNotFoundException("member not found")
+        );
+
+        return member.getName();
+    }
+
     public void createChatRoom(String roomName) {
         ChatRoom chatRoom = ChatRoom.builder()
             .name(roomName)

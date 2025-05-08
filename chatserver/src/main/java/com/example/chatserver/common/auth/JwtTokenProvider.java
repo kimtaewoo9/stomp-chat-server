@@ -26,9 +26,11 @@ public class JwtTokenProvider {
         this.SECRET_KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKey));
     }
 
-    public String createToken(String email, Role role) {
+    public String createToken(String email, String name, Role role) {
         Claims claims = Jwts.claims().setSubject(email);
+        claims.put("name", name);
         claims.put("role", role);
+
         Date now = new Date();
         // Jwts.builder를 사용하면 기본적으로 헤더를 설정해줌.
         return Jwts.builder() // Jwts.builder를 사용하면 기본적으로 헤더를 설정해줌.
