@@ -72,7 +72,7 @@ public class ChatController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/room/private/create")
+    @PostMapping("/chat/room/private/create")
     public ResponseEntity<?> getOrCreatePrivateRoom(@RequestParam Long otherMemberId) {
         Long roomId = chatService.getOrCreatePrivateRoom(otherMemberId);
         return ResponseEntity.ok(roomId);
