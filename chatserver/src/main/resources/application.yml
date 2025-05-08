@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://metro.proxy.rlwy.net:49386/railway
-    username: postgres
-    password: rySAHDjVbXlObNlCDDkbEvbFeIkZGWys
+    url: jdbc:postgresql://localhost:5432/chatdb
+    username: root
+    password: 1234
   jpa:
     hibernate:
       ddl-auto: update
