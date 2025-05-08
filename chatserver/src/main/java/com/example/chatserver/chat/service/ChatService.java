@@ -157,6 +157,7 @@ public class ChatService {
             .map(message -> ChatMessageDto.builder()
                 .senderEmail(message.getMember().getEmail())
                 .message(message.getContent())
+                .createdAt(message.getCreatedTime())
                 .build())
             .toList();
     }

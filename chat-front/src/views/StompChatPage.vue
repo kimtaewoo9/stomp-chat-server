@@ -11,9 +11,14 @@
                             <div 
                                 v-for="(msg, index) in messages"
                                 :key="index"
-                                :class="['chat-message', msg.senderEmail ===this.senderEmail ? 'sent' : 'received' ]"
-                            >
-                                <strong>{{ msg.senderEmail }}: </strong> {{ msg.message }}
+                                :class="['chat-message', msg.senderEmail === this.senderEmail ? 'sent' : 'received' ]"
+                            >   
+                                <div class="message-time" :class="{ 'time-sent': msg.senderEmail === this.senderEmail, 'time-received': msg.senderEmail !== this.senderEmail }">
+                                    {{ formatTime(msg.createdAt) }}
+                                </div>
+                                <div class="message-content">
+                                    <strong>{{ msg.senderEmail }}: </strong> {{ msg.message }}
+                                </div>
                             </div>
                         </div>
                         <v-text-field
@@ -24,11 +29,8 @@
                         <v-btn color="primary" block @click="sendMessage">전송</v-btn>
                     </v-card-text>
                 </v-card>
-
             </v-col>
-
         </v-row>
-
     </v-container>
 </template>
 
@@ -84,7 +86,7 @@ export default{
             )
         },
         sendMessage(){
-            if(this.newMessage.trim() === "")return;
+            if(this.newMessage.trim() === "") return;
             const message = {
                 senderEmail: this.senderEmail,
                 message: this.newMessage
@@ -105,10 +107,21 @@ export default{
                 this.stompClient.disconnect();
             }
         },
-        
+        formatTime(timestamp) {
+            if (!timestamp){
+                return '';
+            }
+            
+            const date = new Date(timestamp);
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+            
+            return `${hours}:${minutes}`;
+        }
     },
 }
 </script>
+
 <style>
 .chat-box{
     height: 300px;
@@ -118,12 +131,35 @@ export default{
 }
 
 .chat-message{
-    margin-bottom:10px;
+    margin-bottom: 10px;
+    position: relative;
 }
+
+.message-content {
+    display: inline-block;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 2px;
+}
+
 .sent{
-    text-align:right;
+    text-align: right;
 }
+
 .received{
-    text-align:left;
+    text-align: left;
+}
+
+.time-sent {
+    text-align: right;
+}
+
+.time-received {
+    text-align: left;
 }
 </style>
