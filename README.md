@@ -1,10 +1,26 @@
 ## 웹소켓/STOMP를 활용한 채팅서비스(spring, vue, redis)
 
-1. websocket/stomp 기술을 활용한1:1채팅, 단체 채팅 등 시나리오별 채팅서비스 구현
+#### 기술 스택
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)
 
-- 순수 웹소켓을 활용한 채팅 구현
-- stomp를 활용한 1:1채팅
-- stomp를 활용한 그룹채팅
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vue.js&logoColor=white)
+![Vuetify](https://img.shields.io/badge/Vuetify-1867C0?style=for-the-badge&logo=vuetify&logoColor=white)
+![Vue Router](https://img.shields.io/badge/Vue_Router-41B883?style=for-the-badge&logo=vue.js&logoColor=white)
+![SockJS](https://img.shields.io/badge/SockJS-000000?style=for-the-badge&logo=socket.io&logoColor=white)
+
+Spring Boot와 Vue.js를 활용한 실시간 채팅 서비스로,
+
+웹소켓과 STOMP 프로토콜을 기반으로 1:1 채팅 및 그룹 채팅 기능을 제공합니다.
+
+Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성을 고려한 설계를 적용했습니다.
+
+🔗 **데모 사이트**: [stomp-chat-server.up.railway.app](https://stomp-chat-server.up.railway.app/)
 
 <details>
   <summary>채팅방 화면</summary>
@@ -41,12 +57,3 @@
   - 채팅방 나가기
 
 ## redis의 pub/sub을 활용한 다중채팅서버 확장성 설계
-
-## 기술스택
-백엔드
-
-java17, springboot3.4, spring data jpa, jwt, postgres, redis
-
-프론트엔드
-
-html/css/js, vue3, vuetify, vue-router, sockjs-client
