@@ -35,7 +35,8 @@ export default{
     methods:{
         doLogout(){
             localStorage.clear();
-            window.location.reload();
+            // window.location.reload();
+            window.location.href = '/';
         }
     }
 }
