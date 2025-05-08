@@ -3,9 +3,6 @@
         <v-row justify="center">
             <v-col cols="12" md="8">
                 <v-card>
-                    <v-card-title class="text-center text-h5">
-                        채팅
-                    </v-card-title>
                     <v-card-text>
                         <div class="chat-box">
                             <div 
@@ -17,7 +14,7 @@
                                     {{ formatTime(msg.createdAt) }}
                                 </div>
                                 <div class="message-content">
-                                    <strong>{{ msg.senderEmail }}: </strong> {{ msg.message }}
+                                    <strong>{{ msg.senderName }}: </strong> {{ msg.message }}
                                 </div>
                             </div>
                         </div>
@@ -47,7 +44,8 @@ export default{
             stompClient: null,
             token: "",
             senderEmail: null,
-            roomId: null,
+            sendName: null,
+            roomId: null
         }
     },
     async created(){
