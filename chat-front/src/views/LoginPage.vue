@@ -73,6 +73,10 @@ export default{
             localStorage.setItem("role", role);
             localStorage.setItem("email", email);
             window.location.href="/";
+
+            // 리다이렉트 정보가 있으면 해당 페이지로, 없으면 홈으로 이동
+            const redirectPath = this.$route.query.redirect || '/';
+            this.$router.push(redirectPath);
         },
         goToSignup() {
             // 회원가입 페이지로 이동
