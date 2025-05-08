@@ -20,8 +20,8 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
         // CONNECT
         registry.addEndpoint("/connect")
-            .setAllowedOrigins("http://localhost:3000")
-            .setAllowedOrigins("https://stomp-chat-server.up.railway.app")
+            .setAllowedOrigins("http://localhost:3000",
+                "https://stomp-chat-server.up.railway.app")
             .withSockJS(); // ws:// 가 아닌 http:// 엔드포인트를 사용할 수 있게 해주는 sockJS 라이브러리 .
     }
 
