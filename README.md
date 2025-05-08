@@ -45,7 +45,7 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
     <img width="919" alt="image" src="https://github.com/user-attachments/assets/673134df-0314-4622-839b-0183bdb5ca66" />
 </details>
 
-## ✅ 개발 주요 API 목록
+## 개발 주요 API 목록
 - stomp 통신 후 메시지 DB 저장
 - 그룹채팅관련
   - 그룹채팅방 개설
