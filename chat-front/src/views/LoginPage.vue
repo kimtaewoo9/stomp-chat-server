@@ -2,36 +2,45 @@
     <v-container>
         <v-row justify="center">
             <v-col cols="12" sm="4" md="6">
-                <v-card>
+                <v-card class="mx-auto" max-width="450px" rounded="lg">
                     <v-card-title class="text-h5 text-center">로그인</v-card-title>
                     <v-card-text>
-                        <v-form @submit.prevent="doLogin">
+                        <div class="input-container">
                             <v-text-field 
-                            label="email"
-                            v-model="email"
-                            type="email"
-                            required
+                                label="email"
+                                v-model="email"
+                                type="email"
+                                required
+                                hide-details
+                                variant="plain"
+                                class="no-bottom-border"
                             ></v-text-field>
+
+                            <v-divider></v-divider>
                             
                             <v-text-field 
-                            label="password"
-                            v-model="password"
-                            type="password"
-                            required
-                            >
-                            </v-text-field>
-                            <v-btn type="submit" color="primary" block>로그인</v-btn>
-                        </v-form>
-                        
-                        <!-- 구분선 추가 -->
+                                label="password"
+                                v-model="password"
+                                type="password"
+                                required
+                                hide-details
+                                variant="plain"
+                            ></v-text-field>
+                        </div>
                         <v-divider class="my-4"></v-divider>
+
+                        <v-btn 
+                            type="submit"
+                            color="primary"
+                            block class="mt-4 font-weight-bold"
+                            @click="doLogin">로그인</v-btn>
                         
                         <!-- 회원가입 버튼 추가 -->
                         <v-btn 
                             block 
                             variant="outlined" 
                             color="primary" 
-                            class="mt-2"
+                            class="mt-2 font-weight-bold"
                             @click="goToSignup"
                         >
                             회원가입
