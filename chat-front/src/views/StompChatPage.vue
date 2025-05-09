@@ -8,7 +8,7 @@
                             <div 
                                 v-for="(msg, index) in messages"
                                 :key="index"
-                                class="chat-message"
+                                :class="['chat-message', msg.senderEmail === this.senderEmail ? 'sent' : 'received' ]"
                             >   
                                 <div class="d-flex justify-space-between">
                                     <strong>{{ msg.senderName }}</strong>
@@ -17,7 +17,7 @@
                                     </div>
                                 </div>
                                 <div class="message-content">
-                                    {{ msg.message }}
+                                    <strong>{{ msg.senderName }}: </strong> {{ msg.message }}
                                 </div>
                             </div>
                         </div>
@@ -68,7 +68,7 @@ export default{
         this.disconnectWebSocket();
         next();
     },
-    // 화면을 껐을때 disconnect
+    // 화면을 완전히 꺼버렸을때
     beforeUnmount() {
         this.disconnectWebSocket();
     },
