@@ -18,16 +18,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="input-area pa-4">
-                            <v-text-field
-                                v-model="newMessage"
-                                label="메시지 입력"
-                                variant="outlined"
-                                density="compact"
-                                hide-details
-                                @keyup.enter="sendMessage"
-                            />
-                            <v-btn color="primary" class="mt-2" block @click="sendMessage">전송</v-btn>
+                        <div class="input-area pa-2">
+                            <div class="d-flex align-center">
+                                <v-text-field
+                                    v-model="newMessage"
+                                    label="메시지 입력"
+                                    variant="outlined"
+                                    density="compact"
+                                    hide-details
+                                    class="message-input"
+                                    @keyup.enter="sendMessage"
+                                />
+                                <v-btn 
+                                    color="primary" 
+                                    icon 
+                                    class="send-btn ml-2"
+                                    @click="sendMessage"
+                                >
+                                    <v-icon>mdi-send</v-icon>
+                                </v-btn>
+                            </div>
                         </div>
                     </v-card-text>
                 </v-card>
@@ -214,4 +224,44 @@ export default{
 .v-btn.primary {
     background-color: #5181b8 !important;
 }
+
+.input-area {
+    border-top: 1px solid #f0f0f0;
+    background-color: #fafafa;
+    padding: 10px 15px;
+}
+
+.message-input {
+    flex-grow: 1;
+}
+
+.send-btn {
+    min-width: 40px !important;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+/* 텍스트 필드 스타일 개선 */
+:deep(.v-field) {
+    border-radius: 20px !important;
+}
+
+:deep(.v-field__outline) {
+    color: #e0e0e0 !important;
+}
+
+:deep(.v-field__input) {
+    padding: 8px 16px !important;
+}
+
+
 </style>
