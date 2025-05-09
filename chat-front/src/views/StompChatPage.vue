@@ -22,7 +22,7 @@
                             <div class="d-flex align-center">
                                 <v-text-field
                                     v-model="newMessage"
-                                    label="메시지 입력"
+                                    placeholder="메시지 입력"
                                     variant="outlined"
                                     density="compact"
                                     hide-details
@@ -31,8 +31,8 @@
                                 />
                                 <v-btn 
                                     color="primary" 
-                                    icon 
                                     class="send-btn ml-2"
+                                    elevation="2"
                                     @click="sendMessage"
                                 >
                                     <v-icon>mdi-send</v-icon>
@@ -202,32 +202,6 @@ export default{
 .input-area {
     border-top: 1px solid #f0f0f0;
     background-color: #fafafa;
-}
-
-:deep(.v-text-field .v-field__outline__start),
-:deep(.v-text-field .v-field__outline__end),
-:deep(.v-text-field .v-field__outline__notch) {
-    border-color: #e0e0e0 !important;
-}
-
-:deep(.v-text-field .v-field__input) {
-    padding-top: 8px;
-    padding-bottom: 8px;
-}
-
-.v-btn {
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: normal;
-}
-
-.v-btn.primary {
-    background-color: #5181b8 !important;
-}
-
-.input-area {
-    border-top: 1px solid #f0f0f0;
-    background-color: #fafafa;
     padding: 10px 15px;
 }
 
@@ -236,10 +210,29 @@ export default{
 }
 
 .send-btn {
-    min-width: 40px !important;
-    width: 40px;
-    height: 40px;
+    min-width: 44px !important;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.send-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+}
+
+.send-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.send-btn .v-icon {
+    font-size: 20px;
+    transform: rotate(-30deg) translateX(-2px);
 }
 
 .d-flex {
@@ -263,5 +256,47 @@ export default{
     padding: 8px 16px !important;
 }
 
+.v-btn {
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
+}
 
+.v-btn.primary {
+    background-color: #5181b8 !important;
+}
+
+/* 버튼에 물결 효과 추가 */
+.send-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.send-btn:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    20% {
+        transform: scale(25, 25);
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(40, 40);
+    }
+}
 </style>
