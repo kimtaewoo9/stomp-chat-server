@@ -28,8 +28,7 @@ public class StompController {
 
         chatMessageDto.setRoomId(roomId);
         chatMessageDto.setCreatedAt(LocalDateTime.now());
-        chatMessageDto.setSenderName(senderName); // 이름 넣어야함
-        // 특정 채팅방을 구독하고 있는 모든 클라이언트에게 채팅 메시지를 전달함 .
+        chatMessageDto.setSenderName(senderName);
         simpMessageSendingOperations.convertAndSend("/topic/" + roomId, chatMessageDto);
     }
 }
