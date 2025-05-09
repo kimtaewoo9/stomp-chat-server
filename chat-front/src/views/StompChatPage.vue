@@ -10,14 +10,12 @@
                                 :key="index"
                                 :class="['chat-message', msg.senderEmail === this.senderEmail ? 'sent' : 'received' ]"
                             >   
-                                <div class="d-flex justify-space-between">
+                                <div class="message-header" :class="{ 'text-right': msg.senderEmail === this.senderEmail, 'text-left': msg.senderEmail !== this.senderEmail }">
                                     <strong>{{ msg.senderName }}</strong>
-                                    <div class="message-time">
-                                        {{ formatTime(msg.createdAt) }}
-                                    </div>
+                                    <span class="message-time ml-2">{{ formatTime(msg.createdAt) }}</span>
                                 </div>
-                                <div class="message-content">
-                                    <strong>{{ msg.senderName }}: </strong> {{ msg.message }}
+                                <div class="message-content" :class="{ 'text-right': msg.senderEmail === this.senderEmail, 'text-left': msg.senderEmail !== this.senderEmail }">
+                                    {{ msg.message }}
                                 </div>
                             </div>
                         </div>
@@ -130,6 +128,18 @@ export default{
 </script>
 
 <style>
+.sent {
+    text-align: right;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.received {
+    text-align: left;
+    margin-right: auto;
+    margin-left: 0;
+}
+
 .chat-card {
     border-radius: 0;
     box-shadow: none;
@@ -151,6 +161,13 @@ export default{
     position: relative;
     padding: 15px 20px;
     border-bottom: 1px solid #f0f0f0;
+    width: 100%;
+    display: block;
+}
+
+.message-header {
+    width: 100%;
+    display: block;
 }
 
 .message-content {
