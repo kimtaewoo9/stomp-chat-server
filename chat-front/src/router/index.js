@@ -6,8 +6,14 @@ import SimpleWebsocket from "@/views/SimpleWebsocket.vue"
 import StompChatPage from "@/views/StompChatPage.vue"
 import GroupChattingList from "@/views/GroupChattingList.vue"
 import MyChatPage from "@/views/MyChatPage.vue"
+import HomePage from "@/views/Homepage.vue"
 
 const routes = [
+    {
+        path: '/',
+        name: 'Home',
+        component: HomePage
+    },
     {
         path:'/member/create',
         name: 'MemberCreate',
