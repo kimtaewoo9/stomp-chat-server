@@ -32,10 +32,10 @@
                                 <v-btn 
                                     color="primary" 
                                     class="send-btn ml-2"
-                                    elevation="2"
                                     @click="sendMessage"
                                 >
-                                    <v-icon>mdi-send</v-icon>
+                                    <v-icon class="mr-1">mdi-send</v-icon>
+                                    전송
                                 </v-btn>
                             </div>
                         </div>
@@ -45,96 +45,6 @@
         </v-row>
     </v-container>
 </template>
-
-<script>
-import SockJS from 'sockjs-client';
-import Stomp from 'webstomp-client';
-import axios from 'axios';
-
-export default{
-    data(){
-        return {
-            messages: [],
-            newMessage: "",
-            stompClient: null,
-            token: "",
-            senderEmail: null,
-            senderName: null,
-            roomId: null
-        }
-    },
-    async created(){
-        this.senderEmail = localStorage.getItem("email");
-        this.roomId = this.$route.params.roomId;
-        const response = await axios.get(`${process.env.VUE_APP_API_BASE_URL}/chat/history/${this.roomId}`);
-        this.messages = response.data;
-        this.connectWebsocket();
-    },
-    // 사용자가 현재 라우트에서 다른 라우트로 이동하려고 할때 호출되는 훅함수
-    beforeRouteLeave(to, from, next) {
-        this.disconnectWebSocket();
-        next();
-    },
-    // 화면을 완전히 꺼버렸을때
-    beforeUnmount() {
-        this.disconnectWebSocket();
-    },
-    methods: {
-        connectWebsocket(){
-            if(this.stompClient && this.stompClient.connected) return;
-            // sockjs는 websocket을 내장한 향상된 js 라이브러리. http엔드포인트 사용.
-            const sockJs = new SockJS(`${process.env.VUE_APP_API_BASE_URL}/connect`)
-            this.stompClient = Stomp.over(sockJs);
-            this.token = localStorage.getItem("token");
-            this.stompClient.connect({
-                Authorization: `Bearer ${this.token}`
-            },
-                ()=>{
-                    this.stompClient.subscribe(`/topic/${this.roomId}`, (message) => {
-                        const parseMessage = JSON.parse(message.body);
-                        this.messages.push(parseMessage);
-                        this.scrollToBottom();
-                    },{Authorization: `Bearer ${this.token}`})
-                }
-            )
-        },
-        sendMessage(){
-            if(this.newMessage.trim() === "") return;
-            const message = {
-                senderEmail: this.senderEmail,
-                senderName: this.senderName,
-                message: this.newMessage
-            }
-            this.stompClient.send(`/publish/${this.roomId}`, JSON.stringify(message));
-            this.newMessage = ""
-        },
-        scrollToBottom(){
-            this.$nextTick(()=>{
-                const chatBox = this.$el.querySelector(".chat-box");
-                chatBox.scrollTop = chatBox.scrollHeight;
-            })
-        },
-        async disconnectWebSocket(){
-            await axios.post(`${process.env.VUE_APP_API_BASE_URL}/chat/room/${this.roomId}/read`);
-            if(this.stompClient && this.stompClient.connected){
-                this.stompClient.unsubscribe(`/topic/${this.roomId}`);
-                this.stompClient.disconnect();
-            }
-        },
-        formatTime(timestamp) {
-            if (!timestamp){
-                return '';
-            }
-            
-            const date = new Date(timestamp);
-            const hours = date.getHours().toString().padStart(2, '0');
-            const minutes = date.getMinutes().toString().padStart(2, '0');
-            
-            return `${hours}:${minutes}`;
-        }
-    },
-}
-</script>
 
 <style>
 .sent {
@@ -210,29 +120,25 @@ export default{
 }
 
 .send-btn {
-    min-width: 44px !important;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
+    border-radius: 8px !important;
+    height: 40px;
+    min-width: 80px !important;
+    padding: 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: normal;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
 }
 
 .send-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
-}
-
-.send-btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
 }
 
 .send-btn .v-icon {
-    font-size: 20px;
-    transform: rotate(-30deg) translateX(-2px);
+    font-size: 16px;
 }
 
 .d-flex {
@@ -245,7 +151,7 @@ export default{
 
 /* 텍스트 필드 스타일 개선 */
 :deep(.v-field) {
-    border-radius: 20px !important;
+    border-radius: 8px !important;
 }
 
 :deep(.v-field__outline) {
@@ -256,47 +162,7 @@ export default{
     padding: 8px 16px !important;
 }
 
-.v-btn {
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: normal;
-}
-
 .v-btn.primary {
     background-color: #5181b8 !important;
-}
-
-/* 버튼에 물결 효과 추가 */
-.send-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%);
-    transform-origin: 50% 50%;
-}
-
-.send-btn:focus:not(:active)::after {
-    animation: ripple 1s ease-out;
-}
-
-@keyframes ripple {
-    0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-    }
-    20% {
-        transform: scale(25, 25);
-        opacity: 0.3;
-    }
-    100% {
-        opacity: 0;
-        transform: scale(40, 40);
-    }
 }
 </style>
