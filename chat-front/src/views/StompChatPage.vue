@@ -11,11 +11,10 @@
                                 :class="['chat-message', msg.senderEmail === this.senderEmail ? 'sent' : 'received' ]"
                             >   
                                 <div class="message-header" :class="{ 'text-right': msg.senderEmail === this.senderEmail, 'text-left': msg.senderEmail !== this.senderEmail }">
-                                    <strong>{{ msg.senderName }}</strong>
                                     <span class="message-time ml-2">{{ formatTime(msg.createdAt) }}</span>
                                 </div>
                                 <div class="message-content" :class="{ 'text-right': msg.senderEmail === this.senderEmail, 'text-left': msg.senderEmail !== this.senderEmail }">
-                                    {{ msg.message }}
+                                    <strong>{{ msg.senderName }}: </strong>{{ msg.message }}
                                 </div>
                             </div>
                         </div>
