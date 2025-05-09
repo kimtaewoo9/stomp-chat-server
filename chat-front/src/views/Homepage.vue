@@ -11,9 +11,12 @@
           <p>Designed with Redis pub/sub mechanism for scalability in multi-server environments</p>
         </div>
         
-        <div class="action-buttons">
+        <div class="action-buttons" v-if="!isLoggedIn">
           <router-link to="/login" class="underline-btn">Login</router-link>
           <router-link to="/member/create" class="underline-btn">Sign Up</router-link>
+        </div>
+        <div class="action-buttons" v-else>
+          <router-link to="/groupchatting/list" class="underline-btn">Go to Chat</router-link>
         </div>
       </div>
     </div>
@@ -21,7 +24,27 @@
   
   <script>
   export default {
-    name: 'HomePage'
+    name: 'HomePage',
+    data() {
+      return {
+        isLoggedIn: false
+      }
+    },
+    created() {
+      this.checkLoginStatus();
+      // localStorage 변경 감지를 위한 이벤트 리스너 추가
+      window.addEventListener('storage', this.checkLoginStatus);
+    },
+    beforeUnmount() {
+      // 컴포넌트 제거 시 이벤트 리스너 제거
+      window.removeEventListener('storage', this.checkLoginStatus);
+    },
+    methods: {
+      checkLoginStatus() {
+        const token = localStorage.getItem('token');
+        this.isLoggedIn = token !== null && token !== undefined && token.length > 0;
+      }
+    }
   }
   </script>
   
