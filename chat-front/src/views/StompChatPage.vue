@@ -68,7 +68,7 @@ export default{
         this.disconnectWebSocket();
         next();
     },
-    // 화면을 완전히 꺼버렸을때
+    // 화면을 껐을때 disconnect
     beforeUnmount() {
         this.disconnectWebSocket();
     },
@@ -178,7 +178,6 @@ export default{
     background-color: #fafafa;
 }
 
-/* Vuetify 스타일 오버라이드 */
 :deep(.v-text-field .v-field__outline__start),
 :deep(.v-text-field .v-field__outline__end),
 :deep(.v-text-field .v-field__outline__notch) {
