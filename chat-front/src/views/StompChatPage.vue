@@ -2,28 +2,36 @@
     <v-container>
         <v-row justify="center">
             <v-col cols="12" md="8">
-                <v-card>
-                    <v-card-text>
+                <v-card flat class="chat-card">
+                    <v-card-text class="pa-0">
                         <div class="chat-box">
                             <div 
                                 v-for="(msg, index) in messages"
                                 :key="index"
-                                :class="['chat-message', msg.senderEmail === this.senderEmail ? 'sent' : 'received' ]"
+                                class="chat-message"
                             >   
-                                <div class="message-time" :class="{ 'time-sent': msg.senderEmail === this.senderEmail, 'time-received': msg.senderEmail !== this.senderEmail }">
-                                    {{ formatTime(msg.createdAt) }}
+                                <div class="d-flex justify-space-between">
+                                    <strong>{{ msg.senderName }}</strong>
+                                    <div class="message-time">
+                                        {{ formatTime(msg.createdAt) }}
+                                    </div>
                                 </div>
                                 <div class="message-content">
-                                    <strong>{{ msg.senderName }}: </strong> {{ msg.message }}
+                                    {{ msg.message }}
                                 </div>
                             </div>
                         </div>
-                        <v-text-field
-                            v-model="newMessage"
-                            label="메시지 입력"
-                            @keyup.enter="sendMessage"
-                        />
-                        <v-btn color="primary" block @click="sendMessage">전송</v-btn>
+                        <div class="input-area pa-4">
+                            <v-text-field
+                                v-model="newMessage"
+                                label="메시지 입력"
+                                variant="outlined"
+                                density="compact"
+                                hide-details
+                                @keyup.enter="sendMessage"
+                            />
+                            <v-btn color="primary" class="mt-2" block @click="sendMessage">전송</v-btn>
+                        </div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -87,6 +95,7 @@ export default{
             if(this.newMessage.trim() === "") return;
             const message = {
                 senderEmail: this.senderEmail,
+                senderName: this.senderName,
                 message: this.newMessage
             }
             this.stompClient.send(`/publish/${this.roomId}`, JSON.stringify(message));
@@ -121,22 +130,36 @@ export default{
 </script>
 
 <style>
-.chat-box{
-    height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
+.chat-card {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #eaeaea;
+    overflow: hidden;
 }
 
-.chat-message{
-    margin-bottom: 10px;
+.chat-box {
+    height: 400px;
+    overflow-y: auto;
+    border: none;
+    margin-bottom: 0;
+    background-color: #ffffff;
+    padding: 0;
+}
+
+.chat-message {
+    margin-bottom: 0;
     position: relative;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .message-content {
-    display: inline-block;
-    max-width: 80%;
+    display: block;
+    max-width: 100%;
     word-wrap: break-word;
+    margin-top: 5px;
+    color: #333;
+    font-size: 14px;
 }
 
 .message-time {
@@ -145,19 +168,35 @@ export default{
     margin-top: 2px;
 }
 
-.sent{
-    text-align: right;
+.chat-message strong {
+    color: #555;
+    font-weight: 500;
 }
 
-.received{
-    text-align: left;
+.input-area {
+    border-top: 1px solid #f0f0f0;
+    background-color: #fafafa;
 }
 
-.time-sent {
-    text-align: right;
+/* Vuetify 스타일 오버라이드 */
+:deep(.v-text-field .v-field__outline__start),
+:deep(.v-text-field .v-field__outline__end),
+:deep(.v-text-field .v-field__outline__notch) {
+    border-color: #e0e0e0 !important;
 }
 
-.time-received {
-    text-align: left;
+:deep(.v-text-field .v-field__input) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.v-btn {
+    text-transform: none;
+    letter-spacing: normal;
+    font-weight: normal;
+}
+
+.v-btn.primary {
+    background-color: #5181b8 !important;
 }
 </style>
