@@ -9,8 +9,8 @@
                     <v-card-text>
                         <div class="chat-box">
                             <div 
-                             v-for="(msg, index) in messages"
-                             :key="index"
+                                v-for="(msg, index) in messages"
+                                :key="index"
                             >
                                 {{ msg }}
                             </div>
