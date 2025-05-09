@@ -22,19 +22,17 @@
                             <div class="d-flex align-center">
                                 <v-text-field
                                     v-model="newMessage"
-                                    placeholder="메시지 입력"
+                                    placeholder="메시지 입력.."
                                     variant="outlined"
                                     density="compact"
                                     hide-details
-                                    class="message-input"
+                                    class="message-input mr-2"
                                     @keyup.enter="sendMessage"
                                 />
                                 <v-btn 
-                                    color="primary" 
-                                    class="send-btn ml-2"
+                                    class="retro-button"
                                     @click="sendMessage"
                                 >
-                                    <v-icon class="mr-1">mdi-send</v-icon>
                                     전송
                                 </v-btn>
                             </div>
@@ -209,26 +207,28 @@ export default{
     flex-grow: 1;
 }
 
-.send-btn {
-    border-radius: 8px !important;
+.retro-button {
+    font-weight: 600;
     height: 40px;
-    min-width: 80px !important;
-    padding: 0 16px;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: none;
-    letter-spacing: normal;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
+    padding: 12px 20px;
+    outline: none;
+    border: 1px solid black;
+    background-color: #d3d3d3;
+    border-radius: 0;
+    position: relative;
+    box-shadow: inset -1px -1px 0 0 #292929, inset 1px 1px 0 0 #ffffff, inset -2px -2px 0 0 #7f7f7f, inset 2px 2px 0 0 #ebebeb;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
 }
 
-.send-btn:hover {
+.retro-button:active {
+    box-shadow: inset 1px 1px 0 0 #292929, inset -1px -1px 0 0 #ffffff, inset 2px 2px 0 0 #7f7f7f, inset -2px -2px 0 0 #ebebeb;
+    transform: translateY(1px);
+}
+
+.retro-button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     transform: translateY(-1px);
-}
-
-.send-btn .v-icon {
-    font-size: 16px;
 }
 
 .d-flex {
@@ -252,47 +252,5 @@ export default{
     padding: 8px 16px !important;
 }
 
-.v-btn {
-    text-transform: none;
-    letter-spacing: normal;
-    font-weight: normal;
-}
 
-.v-btn.primary {
-    background-color: #5181b8 !important;
-}
-
-/* 버튼에 물결 효과 추가 */
-.send-btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%);
-    transform-origin: 50% 50%;
-}
-
-.send-btn:focus:not(:active)::after {
-    animation: ripple 1s ease-out;
-}
-
-@keyframes ripple {
-    0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-    }
-    20% {
-        transform: scale(25, 25);
-        opacity: 0.3;
-    }
-    100% {
-        opacity: 0;
-        transform: scale(40, 40);
-    }
-}
 </style>
