@@ -230,7 +230,7 @@ public class ChatService {
 
                 MyChatRoomResponseDto responseDto = MyChatRoomResponseDto.builder()
                     .roomId(currentChatRoom.getId())
-                    .roomName(otherMember.getName() + "과의 채팅방")
+                    .roomName(otherMember.getName() + "와(과)의 채팅방")
                     .isGroupChat(currentChatRoom.getIsGroupChat())
                     .unReadCount(unReadCount)
                     .build();
