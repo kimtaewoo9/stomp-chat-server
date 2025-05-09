@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "concrete.css": "^3.1.0",
     "core-js": "^3.8.3",
     "jwt-decode": "^4.0.0",
     "sockjs-client": "^1.6.1",

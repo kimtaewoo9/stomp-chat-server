@@ -2,58 +2,45 @@
     <v-container>
         <v-row justify="center">
             <v-col cols="12" sm="4" md="6">
-                <v-card class="mx-auto" max-width="450px" rounded="lg">
-                    <v-card-title class="text-h5 text-center">회원가입</v-card-title>
-                    <v-card-text>
-                        <div class="input-container">
-                            <v-text-field 
-                                label="name"
+                <h2 class="no-css-title">회원가입</h2>
+                <div class="no-css-card">
+                    <div class="no-css-form">
+                        <div class="no-css-field">
+                            <label for="name">이름:</label>
+                            <input 
+                                id="name"
+                                type="text"
                                 v-model="name"
-                                type="name"
-                                required
-                                hide-details
-                                variant="plain"
-                                class="no-bottom-border"
-                            ></v-text-field>
-
-                            <v-divider></v-divider>
-                            
-                            <v-text-field 
-                                label="email"
-                                v-model="email"
-                                type="email"
-                                required
-                                hide-details
-                                variant="plain"
-                            ></v-text-field>
-
-                            <v-divider></v-divider>
-                            
-                            <v-text-field 
-                                label="password"
-                                v-model="password"
-                                type="password"
-                                required
-                                hide-details
-                                variant="plain"
-                            ></v-text-field>
+                                class="no-css-input"
+                            />
                         </div>
-                        <v-divider class="my-4"></v-divider>
-
-                        <v-btn type="submit" color="primary" block class="mt-4 font-weight-bold" @click="memberCreate">가입하기</v-btn>
                         
-                        <!-- 로그인 페이지로 돌아가는 버튼 -->
-                        <v-btn 
-                            block 
-                            variant="outlined" 
-                            color="primary" 
-                            class="mt-2 font-weight-bold"
-                            @click="goToLogin"
-                        >
-                            로그인 페이지로
-                        </v-btn>
-                    </v-card-text>
-                </v-card>
+                        <div class="no-css-field">
+                            <label for="email">이메일:</label>
+                            <input 
+                                id="email"
+                                type="email"
+                                v-model="email"
+                                class="no-css-input"
+                            />
+                        </div>
+                        
+                        <div class="no-css-field">
+                            <label for="password">비밀번호:</label>
+                            <input 
+                                id="password"
+                                type="password"
+                                v-model="password"
+                                class="no-css-input"
+                            />
+                        </div>
+                        
+                        <div class="no-css-actions">
+                            <button class="simple-btn primary" @click="memberCreate">가입하기</button>
+                            <button class="simple-btn" @click="goToLogin">로그인 페이지로</button>
+                        </div>
+                    </div>
+                </div>
             </v-col>
         </v-row>
     </v-container>
@@ -86,3 +73,74 @@ export default{
     }
 }
 </script>
+
+<style>
+.no-css-card {
+    border: 1px solid #000;
+    padding: 20px;
+    max-width: 450px;
+    margin: 0 auto;
+    font-family: monospace;
+}
+
+.no-css-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: normal;
+    font-family: monospace;
+}
+
+.no-css-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.no-css-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.no-css-input {
+    border: 1px solid #000;
+    padding: 5px;
+    font-family: monospace;
+    background: none;
+}
+
+.no-css-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* 새로운 심플한 버튼 스타일 */
+.simple-btn {
+    font-family: monospace;
+    background: none;
+    border: 1px solid #000;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.simple-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.simple-btn.primary {
+    background-color: #000;
+    color: #fff;
+}
+
+.simple-btn.primary:hover {
+    background-color: #333;
+    border-color: #333;
+}
+</style>
