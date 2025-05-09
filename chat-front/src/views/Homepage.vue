@@ -13,7 +13,7 @@
         
         <div class="action-buttons">
           <router-link to="/login" class="underline-btn">Login</router-link>
-          <router-link to="/signup" class="underline-btn">Sign Up</router-link>
+          <router-link to="/member/create" class="underline-btn">Sign Up</router-link>
         </div>
       </div>
     </div>
