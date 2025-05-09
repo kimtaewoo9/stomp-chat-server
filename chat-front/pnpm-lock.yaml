@@ -11,6 +11,9 @@ importers:
       axios:
         specifier: ^1.7.9
         version: 1.9.0
+      concrete.css:
+        specifier: ^3.1.0
+        version: 3.1.0
       core-js:
         specifier: ^3.8.3
         version: 3.40.0
@@ -1342,6 +1345,9 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+
+  concrete.css@3.1.0:
+    resolution: {integrity: sha512-EooalG5LLTvjw/KuaVN8OZ0vijygyTeEn21Qk5dSIoiryXfkHm+zQ1PeNBHaFixopcJxBtuw5Tb3v8qqwouRSg==}
 
   connect-history-api-fallback@2.0.0:
     resolution: {integrity: sha512-U73+6lQFmfiNPrYbXqr6kZ1i1wiRqXnp2nhMsINseWXO8lDau0LGEffJ8kQi4EjLZympVgRdvqjAgiZ1tgzDDA==}
@@ -5680,6 +5686,8 @@ snapshots:
       - supports-color
 
   concat-map@0.0.1: {}
+
+  concrete.css@3.1.0: {}
 
   connect-history-api-fallback@2.0.0: {}
 
