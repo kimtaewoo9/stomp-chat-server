@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     # railway 서버
-    url: jdbc:postgresql://postgres.railway.internal:5432/${PGDATABASE}
+    url: jdbc:postgresql://${DATABASE_URL}:${PGPORT}/${PGDATABASE}
     username: ${PGUSER}
     password: ${PGPASSWORD}
   jpa:
@@ -10,6 +10,8 @@ spring:
       ddl-auto: update
     show-sql: true
     database: postgresql
+  profiles:
+    active: dev # 개발 환경 ..
 jwt:
   secretKey: ${JWT_SECRET_KEY}
   expiration: 3000
