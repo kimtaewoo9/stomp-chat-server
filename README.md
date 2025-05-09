@@ -44,9 +44,7 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 ![CSS](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![Vue.js](https://img.shields.io/badge/Vue.js-4FC08D?style=flat&logo=vue.js&logoColor=white)
-![Vuetify](https://img.shields.io/badge/Vuetify-1867C0?style=flat&logo=vuetify&logoColor=white)
 ![SockJS](https://img.shields.io/badge/SockJS-000000?style=flat&logo=socket.io&logoColor=white)
-![Vue Router](https://img.shields.io/badge/Vue_Router-41B883?style=flat&logo=vue.js&logoColor=white)
 
 
 ## 개발 주요 API 목록
