@@ -18,26 +18,6 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
     <img width="700" alt="image" src="https://github.com/user-attachments/assets/cf7d1f92-7428-406d-9c62-b260d1758a55" />
 </details>
 
-<details>
-  <summary>채팅방 목록 화면</summary>
-    <img width="700" alt="image" src="https://github.com/user-attachments/assets/fa546ef6-3d7d-49dc-b5b3-fc5bea169213" />
-</details>
-
-<details>
-  <summary>회원 화면</summary>
-    <img width="700" alt="image" src="https://github.com/user-attachments/assets/cbcfbd8b-26a1-4e1c-832a-0cab599bb21e" />
-</details>
-
-<details>
-  <summary>회원가입 화면</summary>
-    <img width="700" alt="image" src="https://github.com/user-attachments/assets/392aa64e-1854-43c1-9980-e6f28f744188" />
-</details>
-
-<details>
-  <summary>로그인 화면</summary>
-    <img width="700" alt="image" src="https://github.com/user-attachments/assets/37b9bb36-7e54-411f-9519-26ac06180056" />
-</details>
-
 ## 🔧 기술 스택
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)
