@@ -2,7 +2,9 @@
 <template>
   <div class="home-container">
     <div class="intro-section">
-      <h1>STOMP CHAT</h1>
+      <h1>STOMP CHAT
+        <img src="/icons/stomp-chat.png" alt="Instagram" class="social-icon"  />
+      </h1>
       <p class="tagline">A real-time communication platform</p>
       
       <div class="description">
