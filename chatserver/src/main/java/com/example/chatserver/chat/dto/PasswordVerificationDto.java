@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatRoomResponseDto {
+public class PasswordVerificationDto {
 
-    private Long roomId;
-    private String roomName;
-    private boolean isPrivate;
+    private String password;
 }

@@ -5,8 +5,10 @@ import com.example.chatserver.chat.domain.ChatParticipant;
 import com.example.chatserver.chat.domain.ChatRoom;
 import com.example.chatserver.chat.domain.ReadStatus;
 import com.example.chatserver.chat.dto.ChatMessageDto;
+import com.example.chatserver.chat.dto.ChatRoomCreateDto;
 import com.example.chatserver.chat.dto.ChatRoomResponseDto;
 import com.example.chatserver.chat.dto.MyChatRoomResponseDto;
+import com.example.chatserver.chat.dto.PasswordVerificationDto;
 import com.example.chatserver.chat.repository.ChatMessageRepository;
 import com.example.chatserver.chat.repository.ChatParticipantRepository;
 import com.example.chatserver.chat.repository.ChatRoomRepository;
@@ -21,6 +23,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +38,8 @@ public class ChatService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatParticipantRepository chatParticipantRepository;
     private final ReadStatusRepository readStatusRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     public ChatMessage saveMessage(Long roomId, ChatMessageDto chatMessageDto) {
         String message = chatMessageDto.getMessage();
@@ -80,11 +85,20 @@ public class ChatService {
         return member.getName();
     }
 
-    public void createChatRoom(String roomName) {
+    public void createChatRoom(ChatRoomCreateDto chatRoomCreateDto) {
+        String roomName = chatRoomCreateDto.getRoomName();
+        boolean isPrivate = chatRoomCreateDto.isPrivate();
         ChatRoom chatRoom = ChatRoom.builder()
             .name(roomName)
             .isGroupChat("Y")
+            .isPrivate(isPrivate)
             .build();
+        String password = chatRoomCreateDto.getPassword();
+        if(isPrivate && password != null){
+            String encodedPassword = passwordEncoder.encode(password);
+            chatRoom.setPassword(encodedPassword);
+        }
+
         chatRoomRepository.save(chatRoom);
 
         // getName() -> 토큰에 포함된 subject 클레임을 가져옴 .
@@ -99,6 +113,19 @@ public class ChatService {
             .build();
 
         chatParticipantRepository.save(chatParticipant);
+    }
+
+    public boolean verifyPassword(Long roomId, PasswordVerificationDto passwordVerificationDto) {
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId).orElseThrow(
+            () -> new EntityNotFoundException("chat room not found")
+        );
+
+        if(!chatRoom.isPrivate()){
+            return true;
+        }
+
+        String password = passwordVerificationDto.getPassword();
+        return passwordEncoder.matches(password, chatRoom.getPassword());
     }
 
     public List<ChatRoomResponseDto> getGroupChatRooms() {

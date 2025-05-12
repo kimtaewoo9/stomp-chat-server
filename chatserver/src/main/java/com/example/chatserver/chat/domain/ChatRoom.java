@@ -32,6 +32,10 @@ public class ChatRoom extends BaseTimeEntity {
     @Builder.Default
     private String isGroupChat = "N"; // TODO RoomType enum 으로 변경
 
+    private boolean isPrivate;
+
+    private String password;
+
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<ChatParticipant> chatParticipants = new ArrayList<>();
@@ -39,4 +43,9 @@ public class ChatRoom extends BaseTimeEntity {
     @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @Builder.Default
     private List<ChatMessage> chatMessages = new ArrayList<>();
+
+    public void setPassword(String encodedPassword){
+        this.isPrivate = true;
+        this.password = encodedPassword;
+    }
 }

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatRoomResponseDto {
+public class ChatRoomCreateDto {
 
-    private Long roomId;
     private String roomName;
     private boolean isPrivate;
+    private String password;
 }
