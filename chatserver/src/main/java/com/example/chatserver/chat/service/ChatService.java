@@ -41,7 +41,7 @@ public class ChatService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public ChatMessage saveMessage(Long roomId, ChatMessageDto chatMessageDto) {
+    public void saveMessage(Long roomId, ChatMessageDto chatMessageDto) {
         String message = chatMessageDto.getMessage();
         String senderEmail = chatMessageDto.getSenderEmail();
 
@@ -72,9 +72,6 @@ public class ChatService {
                 .build();
             readStatusRepository.save(readStatus);
         }
-
-        ChatMessage savedMessage = chatMessageRepository.save(chatMessage);
-        return savedMessage;
     }
 
     public String findMemberNameByEmail(String email) {
@@ -182,7 +179,6 @@ public class ChatService {
             .chatRoom(chatRoom)
             .member(member)
             .build();
-        chatRoom.getChatParticipants().add(chatParticipant);
         chatParticipantRepository.save(chatParticipant);
     }
 
@@ -309,7 +305,6 @@ public class ChatService {
             chatRoom, member).orElseThrow(
             () -> new EntityNotFoundException("you are not a participant")
         );
-        chatRoom.getChatParticipants().remove(chatParticipant);
         chatParticipantRepository.delete(chatParticipant);
 
         int participantsCount = chatParticipantRepository.countByChatRoom(chatRoom);
