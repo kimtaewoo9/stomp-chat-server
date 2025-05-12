@@ -32,7 +32,8 @@ public class ChatRoom extends BaseTimeEntity {
     @Builder.Default
     private String isGroupChat = "N"; // TODO RoomType enum 으로 변경
 
-    private boolean isPrivate;
+    @Column(nullable = false)
+    private Boolean isPrivate;
 
     private String password;
 
@@ -44,7 +45,7 @@ public class ChatRoom extends BaseTimeEntity {
     @Builder.Default
     private List<ChatMessage> chatMessages = new ArrayList<>();
 
-    public void setPassword(String encodedPassword){
+    public void setPassword(String encodedPassword) {
         this.isPrivate = true;
         this.password = encodedPassword;
     }

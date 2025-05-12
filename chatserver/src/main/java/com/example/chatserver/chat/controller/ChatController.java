@@ -8,6 +8,7 @@ import com.example.chatserver.chat.dto.PasswordVerificationDto;
 import com.example.chatserver.chat.service.ChatService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,15 +21,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ChatController {
 
     private final ChatService chatService;
 
     @PostMapping("/chat/room/group/create")
-    public ResponseEntity<?> createGroupChatRoom(@RequestBody ChatRoomCreateDto dto) {
-        chatService.createChatRoom(dto);
+    public ResponseEntity<?> createGroupChatRoom(@RequestBody ChatRoomCreateDto chatRoomCreateDto) {
+        log.info("chat room create dto: {}", chatRoomCreateDto);
+        ChatRoomResponseDto chatRoomResponseDto = chatService.createChatRoom(chatRoomCreateDto);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(chatRoomResponseDto);
     }
 
     @GetMapping("/chat/room/group/list")
@@ -48,13 +51,13 @@ public class ChatController {
     @PostMapping("/chat/room/group/{roomId}/verify-password")
     public ResponseEntity<?> verifyPassword(
         @PathVariable Long roomId,
-        @RequestBody PasswordVerificationDto dto){
+        @RequestBody PasswordVerificationDto dto) {
 
         boolean isVerified = chatService.verifyPassword(roomId, dto);
 
-        if(isVerified){
+        if (isVerified) {
             return ResponseEntity.ok().build();
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }

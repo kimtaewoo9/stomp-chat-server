@@ -77,7 +77,7 @@ public class ChatService {
         return savedMessage;
     }
 
-    public String findMemberNameByEmail(String email){
+    public String findMemberNameByEmail(String email) {
         Member member = memberRepository.findByEmail(email).orElseThrow(
             () -> new EntityNotFoundException("member not found")
         );
@@ -85,21 +85,31 @@ public class ChatService {
         return member.getName();
     }
 
-    public void createChatRoom(ChatRoomCreateDto chatRoomCreateDto) {
+    public ChatRoomResponseDto createChatRoom(ChatRoomCreateDto chatRoomCreateDto) {
         String roomName = chatRoomCreateDto.getRoomName();
         boolean isPrivate = chatRoomCreateDto.isPrivate();
+
+        log.info("{}", isPrivate);
+
         ChatRoom chatRoom = ChatRoom.builder()
             .name(roomName)
             .isGroupChat("Y")
             .isPrivate(isPrivate)
             .build();
         String password = chatRoomCreateDto.getPassword();
-        if(isPrivate && password != null){
+        if (isPrivate && password != null) {
             String encodedPassword = passwordEncoder.encode(password);
             chatRoom.setPassword(encodedPassword);
         }
 
-        chatRoomRepository.save(chatRoom);
+        ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
+
+        ChatRoomResponseDto chatRoomResponseDto = ChatRoomResponseDto.builder()
+            .roomId(savedChatRoom.getId())
+            .roomName(savedChatRoom.getName())
+            .isPrivate(savedChatRoom.getIsPrivate())
+            .createdAt(savedChatRoom.getCreatedTime())
+            .build();
 
         // getName() -> 토큰에 포함된 subject 클레임을 가져옴 .
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -113,6 +123,8 @@ public class ChatService {
             .build();
 
         chatParticipantRepository.save(chatParticipant);
+
+        return chatRoomResponseDto;
     }
 
     public boolean verifyPassword(Long roomId, PasswordVerificationDto passwordVerificationDto) {
@@ -120,7 +132,7 @@ public class ChatService {
             () -> new EntityNotFoundException("chat room not found")
         );
 
-        if(!chatRoom.isPrivate()){
+        if (!chatRoom.getIsPrivate()) {
             return true;
         }
 
@@ -136,6 +148,7 @@ public class ChatService {
             .map(chatRoom -> ChatRoomResponseDto.builder()
                 .roomId(chatRoom.getId())
                 .roomName(chatRoom.getName())
+                .isPrivate(chatRoom.getIsPrivate())
                 .build())
             .toList();
     }
@@ -148,6 +161,8 @@ public class ChatService {
         if (chatRoom.getIsGroupChat().equals("N")) {
             throw new IllegalArgumentException("cannot access");
         }
+
+        // TODO 비밀번호방 참여하기 눌렀을때 이미 참여자면 비밀번호 입력하지 않고 바로 입장 가능 .
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Member member = memberRepository.findByEmail(email).orElseThrow(
@@ -326,6 +341,7 @@ public class ChatService {
         ChatRoom newPrivateChatRoom = ChatRoom.builder()
             .isGroupChat("N")
             .name("1대1 채팅방") // 채팅방 목록 불러올때 채팅방 이름 바꿔주도록 설계
+            .isPrivate(false)
             .build();
 
         ChatRoom savaedPrivateChatRoom = chatRoomRepository.save(newPrivateChatRoom);
