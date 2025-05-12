@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const app = createApp(App);
 
+// 요청 인터셉터 (기존 코드)
 axios.interceptors.request.use(
     config => {
         const token = localStorage.getItem("token");
@@ -15,11 +16,53 @@ axios.interceptors.request.use(
         return config;
     },
     error => {
-        // 인터셉터를 무시하고, 사용자의 본래요청인 화면으로 라우팅
         return Promise.reject(error);
     }
-)
+);
 
+// 리다이렉트 진행 중인지 확인하는 플래그 변수
+let isRedirecting = false;
+
+// 응답 인터셉터
+axios.interceptors.response.use(
+    response => response, // 성공 응답은 그대로 반환
+    error => {
+        console.log('에러 발생 !!!!');
+        console.error('Axios 에러 발생:', {
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            url: error.config?.url,
+            method: error.config?.method,
+            data: error.response?.data,
+            message: error.message
+        });
+
+        // 401 Unauthorized 에러 처리
+        if (error.response && error.response.status === 401) {
+            // 첫 번째 401 에러에서만 알림 표시 및 리다이렉트
+            if (!isRedirecting) {
+                isRedirecting = true;
+                localStorage.removeItem('token');
+                alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+                router.push('/login');
+                
+                // 일정 시간 후 플래그 초기화 (5초 후)
+                setTimeout(() => {
+                    isRedirecting = false;
+                }, 5000);
+            }
+            
+            // 모든 401 에러에 대해 Promise 반환하여 에러 전파 중단
+            return new Promise(() => {});
+        }
+        
+        // 401 이외의 에러는 계속 전파
+        return Promise.reject(error);
+    }
+);
+
+// axios를 전역 속성으로 등록
+app.config.globalProperties.$axios = axios;
 
 app.use(router);
 app.use(vuetify);
