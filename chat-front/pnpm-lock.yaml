@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@mdi/font':
+        specifier: ^7.4.47
+        version: 7.4.47
       axios:
         specifier: ^1.7.9
         version: 1.9.0
@@ -649,6 +652,9 @@ packages:
 
   '@leichtgewicht/ip-codec@2.0.5':
     resolution: {integrity: sha512-Vo+PSpZG2/fmgmiNzYK9qWRh8h/CHrwD0mo1h1DzL4yzHNSfWYujGTYsWGreD000gcgmZ7K4Ys6Tx9TxtsKdDw==}
+
+  '@mdi/font@7.4.47':
+    resolution: {integrity: sha512-43MtGpd585SNzHZPcYowu/84Vz2a2g31TvPMTm9uTiCSWzaheQySUcSyUH/46fPnuPQWof2yd0pGBtzee/IQWw==}
 
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
@@ -4635,6 +4641,8 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.5.0
 
   '@leichtgewicht/ip-codec@2.0.5': {}
+
+  '@mdi/font@7.4.47': {}
 
   '@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1':
     dependencies:
