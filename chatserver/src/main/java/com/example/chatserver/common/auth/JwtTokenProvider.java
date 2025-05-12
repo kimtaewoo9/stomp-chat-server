@@ -36,7 +36,9 @@ public class JwtTokenProvider {
         return Jwts.builder() // Jwts.builder를 사용하면 기본적으로 헤더를 설정해줌.
             .setClaims(claims)
             .setIssuedAt(now)
-            .setExpiration(new Date(now.getTime() + expiration * 60 * 1000L))
+            .setExpiration(
+                new Date(now.getTime() + expiration * 24 * 60 * 60 * 1000L)) // 기준이 밀리 세컨드임 .
+//            .setExpiration(new Date(now.getTime() + 10 * 1000)) // 테스트를 위해 10초로 설정 .
             .signWith(SECRET_KEY)
             .compact();
     }

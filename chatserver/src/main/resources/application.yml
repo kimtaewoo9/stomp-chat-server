@@ -14,4 +14,4 @@ spring:
     active: dev # 개발 환경 ..
 jwt:
   secretKey: ${JWT_SECRET_KEY}
-  expiration: 3000
+  expiration: 30

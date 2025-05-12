@@ -64,7 +64,7 @@ const router = createRouter({
 
 // 네비게이션 가드 추가
 router.beforeEach((to, from, next) => {
-    // 로그인이 필요한 페이지인지 확인
+    
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // 로그인 상태 확인 (localStorage에서 토큰 확인)
         if (!localStorage.getItem("token")) {
