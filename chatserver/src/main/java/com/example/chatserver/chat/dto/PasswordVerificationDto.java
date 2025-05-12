@@ -1,6 +1,5 @@
 package com.example.chatserver.chat.dto;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatRoomResponseDto {
+public class PasswordVerificationDto {
 
-    private Long roomId;
-    private String roomName;
-    private Boolean isPrivate;
-    private LocalDateTime createdAt;
+    private String password;
 }

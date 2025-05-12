@@ -1,30 +1,37 @@
 package com.example.chatserver.chat.controller;
 
 import com.example.chatserver.chat.dto.ChatMessageDto;
+import com.example.chatserver.chat.dto.ChatRoomCreateDto;
 import com.example.chatserver.chat.dto.ChatRoomResponseDto;
 import com.example.chatserver.chat.dto.MyChatRoomResponseDto;
+import com.example.chatserver.chat.dto.PasswordVerificationDto;
 import com.example.chatserver.chat.service.ChatService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class ChatController {
 
     private final ChatService chatService;
 
     @PostMapping("/chat/room/group/create")
-    public ResponseEntity<?> createGroupChatRoom(@RequestParam String roomName) {
-        chatService.createChatRoom(roomName);
+    public ResponseEntity<?> createGroupChatRoom(@RequestBody ChatRoomCreateDto chatRoomCreateDto) {
+        log.info("chat room create dto: {}", chatRoomCreateDto);
+        ChatRoomResponseDto chatRoomResponseDto = chatService.createChatRoom(chatRoomCreateDto);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(chatRoomResponseDto);
     }
 
     @GetMapping("/chat/room/group/list")
@@ -39,6 +46,20 @@ public class ChatController {
         chatService.addParticipantToGroupChat(roomId);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/chat/room/group/{roomId}/verify-password")
+    public ResponseEntity<?> verifyPassword(
+        @PathVariable Long roomId,
+        @RequestBody PasswordVerificationDto dto) {
+
+        boolean isVerified = chatService.verifyPassword(roomId, dto);
+
+        if (isVerified) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @GetMapping("/chat/history/{roomId}")
