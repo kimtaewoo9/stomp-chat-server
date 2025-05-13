@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @Slf4j
-@RestControllerAdvice // @ControllerAdvice + @ResponseBody, REST API의 예외를 전역적으로 처리
+@RestControllerAdvice // @ControllerAdvice + @ResponseBody
 public class GlobalExceptionHandler {
-    
+
+    // EntityNotFoundException, NoSuchElementException을 처리할 수 있는 처리기 .
     @ExceptionHandler({EntityNotFoundException.class, NoSuchElementException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(RuntimeException ex,
         HttpServletRequest request) {
+        // 로그를 써주고 .. 응답을 만들어서 보내줌 .
         log.warn("Resource not found at URI [{}]: {}", request.getRequestURI(), ex.getMessage());
         ErrorResponse errorResponse = new ErrorResponse(
             HttpStatus.NOT_FOUND.value(),
@@ -26,10 +28,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    // 다양한 IllegalArgumentException 처리
+    // IllegalArgumentException 을 처리할 수 있는 처리기 ..
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException ex,
         HttpServletRequest request) {
+        // 예외를 ex 라는 파라미터로 받는다.
         String message = ex.getMessage();
         HttpStatus status;
         String errorPhrase;
@@ -77,17 +80,4 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    // 필요에 따라 Spring Security의 AccessDeniedException 등 다른 특정 예외 핸들러 추가 가능
-    // @ExceptionHandler(AccessDeniedException.class)
-    // public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
-    //     log.warn("Access denied at URI [{}]: {}", request.getRequestURI(), ex.getMessage());
-    //     ErrorResponse errorResponse = new ErrorResponse(
-    //             HttpStatus.FORBIDDEN.value(),
-    //             HttpStatus.FORBIDDEN.getReasonPhrase(),
-    //             "요청한 리소스에 접근할 권한이 없습니다.",
-    //             request.getRequestURI()
-    //     );
-    //     return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
-    // }
 }
