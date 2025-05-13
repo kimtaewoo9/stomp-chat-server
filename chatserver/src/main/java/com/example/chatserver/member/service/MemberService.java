@@ -46,6 +46,7 @@ public class MemberService {
         String loginEmail = loginDto.getEmail();
         String loginPassword = loginDto.getPassword();
 
+        // 이렇게 하면 예외가 처리되지 않고 filter 까지 전달됨 .
         Member member = memberRepository.findByEmail(loginEmail).orElseThrow(
             () -> new EntityNotFoundException("존재하지 않는 이메일 입니다."));
         // 순서가 원시 비밀번호, 인코딩 된 비밀번호 순으로 파라미터를 전달해야함 .

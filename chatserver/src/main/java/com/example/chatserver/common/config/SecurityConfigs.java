@@ -28,10 +28,16 @@ public class SecurityConfigs {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
+            // 인증된 사용자 -> Authentication 객체가 SecurityContextHolder에 저장되어 있는 사용자 ..
             .authorizeHttpRequests(
                 a -> a.requestMatchers("/member/create", "/member/doLogin", "/connect/**")
-                    .permitAll().anyRequest().authenticated())
+                    .permitAll(). // 이 경로들은 authentication 객체가 없어도 허용
+                        anyRequest().
+                    authenticated() // 나머지 요청들은 .. 인증 되어야함 .
+            )
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            // UsernamePasswordAuthenticationFilter -> 로그인 요청시 아이디 비밀번호가 맞는지 확인 .
+            // 근데 여기서 401 오류 내는거 같음 ..
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
     }
