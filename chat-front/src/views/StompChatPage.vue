@@ -256,7 +256,7 @@ export default {
 }
 
 .chat-box {
-    height: 400px;
+    height: 450px;
     overflow-y: auto;
     border: none;
     margin-bottom: 0;
