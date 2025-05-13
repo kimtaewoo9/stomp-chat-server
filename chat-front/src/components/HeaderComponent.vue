@@ -27,10 +27,10 @@ export default{
         }
     },
     created(){
-       const token = localStorage.getItem("token");
-       if(token){
-        this.isLogin = true;
-       }
+        const token = localStorage.getItem("token");
+        if(token){
+            this.isLogin = true;
+        }
     },
     methods:{
         doLogout(){

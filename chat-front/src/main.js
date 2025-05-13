@@ -27,7 +27,6 @@ let isRedirecting = false;
 axios.interceptors.response.use(
     response => response, // 성공 응답은 그대로 반환
     error => {
-        // 401 Unauthorized 에러 처리
         if (error.response && error.response.status === 401) {
             // 첫 번째 401 에러에서만 알림 표시 및 리다이렉트
             if (!isRedirecting) {
