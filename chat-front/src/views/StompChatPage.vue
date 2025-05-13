@@ -249,9 +249,9 @@ export default {
 }
 
 .chat-card {
-    border-radius: 0;
-    box-shadow: none;
-    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e0e0e0;
     overflow: hidden;
 }
 
@@ -306,23 +306,6 @@ export default {
 
 .message-input {
     flex-grow: 1;
-}
-
-.retro-button {
-    font-weight: 600;
-    height: 40px;
-    padding: 0 20px;
-    line-height: 38px;
-    outline: none;
-    border: 1px solid black;
-    background-color: #d3d3d3;
-    border-radius: 0;
-    position: relative;
-    box-shadow: inset -1px -1px 0 0 #292929, inset 1px 1px 0 0 #ffffff, inset -2px -2px 0 0 #7f7f7f, inset 2px 2px 0 0 #ebebeb;
-    font-family: 'Courier New', monospace;
-    cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-    white-space: nowrap;
 }
 
 .retro-button:active {
