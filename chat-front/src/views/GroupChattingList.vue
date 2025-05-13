@@ -223,6 +223,7 @@ export default{
     margin: 2px;
     cursor: pointer;
     transition: all 0.2s ease;
+    border-radius: 3px;
 }
 
 .no-css-btn:hover {
