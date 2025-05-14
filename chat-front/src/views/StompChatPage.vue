@@ -236,8 +236,6 @@ export default {
 </script>
 
 <style>
-/* ... (다른 스타일들은 그대로 유지) ... */
-
 .sent {
     text-align: right;
     margin-left: auto;
@@ -280,7 +278,6 @@ export default {
 .chat-box > .chat-message:last-child {
     border-bottom: none;
 }
-
 
 .message-header {
     width: 100%;
