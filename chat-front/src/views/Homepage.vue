@@ -2,9 +2,7 @@
 <template>
   <div class="home-container">
     <div class="intro-section">
-      <h1>STOMP CHAT
-        <img src="/icons/stomp-chat.png" alt="stomp-chat" class="social-icon"  />
-      </h1>
+      <h1>STOMP CHAT</h1>
       <p class="tagline">A real-time communication platform</p>
       
       <div class="description">
@@ -72,9 +70,23 @@ export default {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem; /* 폰트 크기를 조금 더 키워 그라데이션 효과가 잘 보이도록 합니다. */
   margin-bottom: 0.5rem;
-  color: #333;
+  font-weight: bold; /* 폰트를 굵게 하여 주목도를 높입니다. */
+  /* 그라데이션 적용 */
+  background: linear-gradient(to right, #8e76d5, #e0699e); /* 예시 그라데이션 색상 */
+  -webkit-background-clip: text; /* Safari, Chrome, Edge 등 웹킷 기반 브라우저용 */
+  background-clip: text;         /* 표준 속성 */
+  color: transparent;            /* 그라데이션이 보이도록 텍스트 색상을 투명하게 설정 */
+  display: inline-block; /* 그라데이션이 텍스트 너비에 맞게 적용되도록 */
+}
+
+/* h1 안의 아이콘 스타일은 유지하거나 필요에 따라 조정합니다. */
+h1 .social-icon {
+  width: 2rem; /* 아이콘 크기 조정 (h1 폰트 크기에 맞춰서) */
+  height: 2rem; /* 아이콘 크기 조정 */
+  margin-left: 0.5rem; /* 텍스트와 아이콘 사이 간격 */
+  vertical-align: middle; /* 아이콘을 텍스트 중간에 맞춤 */
 }
 
 .tagline {
@@ -145,11 +157,15 @@ h1 {
   color: #000;
 }
 
-.social-icon {
+/* social-icon 클래스가 h1 안에서도 사용되고, social-footer 안에서도 사용되므로,
+   h1 내부의 아이콘 크기만 특별히 조정하려면 더 구체적인 선택자를 사용했습니다.
+   기존 .social-icon 스타일은 유지됩니다. */
+.social-footer .social-icon { /* 기존 스타일 유지 */
   width: 16px;
   height: 16px;
   margin-right: 4px;
 }
+
 
 .underline-text {
     position: relative;
@@ -163,7 +179,12 @@ h1 {
   }
   
   h1 {
-    font-size: 2rem;
+    font-size: 2.2rem; /* 모바일에서도 h1 폰트 크기 조정 */
+  }
+
+  h1 .social-icon {
+    width: 1.8rem; /* 모바일 아이콘 크기 조정 */
+    height: 1.8rem;
   }
   
   .tagline {
