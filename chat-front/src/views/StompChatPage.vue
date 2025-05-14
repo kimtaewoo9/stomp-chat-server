@@ -236,6 +236,8 @@ export default {
 </script>
 
 <style>
+/* ... (다른 스타일들은 그대로 유지) ... */
+
 .sent {
     text-align: right;
     margin-left: auto;
@@ -261,17 +263,24 @@ export default {
     border: none;
     margin-bottom: 0;
     background-color: #ffffff;
-    padding: 0;
+    /* padding: 0;  chat-message에서 패딩을 관리하므로 여기선 제거하거나 0으로 */
 }
 
 .chat-message {
-    margin-bottom: 0;
     position: relative;
-    padding: 15px 20px;
+    padding: 12px 20px; /* 상하 패딩은 구분선과의 간격을 위해 유지 */
     width: 100%;
     display: block;
     box-sizing: border-box;
+    /* 모든 chat-message는 기본적으로 하단에 구분선을 갖도록 변경 */
+    border-bottom: 1px solid #eeeeee;
 }
+
+/* 채팅창의 가장 마지막 메시지에는 하단 구분선 제거 */
+.chat-box > .chat-message:last-child {
+    border-bottom: none;
+}
+
 
 .message-header {
     width: 100%;
@@ -337,10 +346,11 @@ export default {
     box-sizing: border-box;
 }
 
+/* 날짜 구분선 스타일 수정 */
 .date-separator {
     display: block;
     width: fit-content;
-    margin: 20px auto 15px auto;
+    margin: 20px auto; /* 상하 마진으로 위아래 메시지와의 간격 확보 */
     padding: 5px 12px;
     background-color: #e9ecf1;
     border-radius: 15px;
@@ -348,8 +358,8 @@ export default {
     font-size: 0.78rem;
     font-weight: 400;
     line-height: 1.4;
-    text-align: left;
-    border-bottom: none;
+    text-align: center; /* 중앙 정렬이 더 일반적 */
+    /* 날짜 구분선 자체에는 테두리를 주지 않음 (메시지들이 테두리를 갖도록) */
 }
 
 .date-separator .v-icon {
@@ -358,21 +368,8 @@ export default {
     vertical-align: text-bottom;
 }
 
-.chat-message + .chat-message {
-    border-top: 1px none;
-}
-
 .date-separator + .chat-message {
-    border-top: none;
-    margin-top: 0;
-}
-
-.chat-box > .date-separator:first-child + .chat-message {
-    border-top: none;
-}
-
-.chat-message + .date-separator {
-    margin-top: 20px;
+    border-top: 1px solid #eeeeee;
 }
 
 </style>
