@@ -2,7 +2,9 @@
 <template>
   <div class="home-container">
     <div class="intro-section">
-      <h1>STOMP CHAT</h1>
+      <h1>
+        STOMP CHAT <sup class="version">V1</sup>
+      </h1>
       <p class="tagline">A real-time communication platform</p>
       
       <div class="description">
@@ -70,26 +72,27 @@ export default {
 }
 
 h1 {
-  font-size: 3rem; /* 폰트 크기를 조금 더 키워 그라데이션 효과가 잘 보이도록 합니다. */
+  font-size: 3rem;
   margin-bottom: 0.5rem;
-  font-weight: bold; /* 폰트를 굵게 하여 주목도를 높입니다. */
-  /* 그라데이션 적용 */
-  background: linear-gradient(to right, #8e76d5, #e0699e); /* 예시 그라데이션 색상 */
-  -webkit-background-clip: text; /* Safari, Chrome, Edge 등 웹킷 기반 브라우저용 */
-  background-clip: text;         /* 표준 속성 */
-  color: transparent;            /* 그라데이션이 보이도록 텍스트 색상을 투명하게 설정 */
-  display: inline-block; /* 그라데이션이 텍스트 너비에 맞게 적용되도록 */
+  font-weight: bold;
+  background: linear-gradient(to right, #8e76d5, #e0699e);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
 }
 
-/* h1 안의 아이콘 스타일은 유지하거나 필요에 따라 조정합니다. */
-h1 .social-icon {
-  width: 2rem; /* 아이콘 크기 조정 (h1 폰트 크기에 맞춰서) */
-  height: 2rem; /* 아이콘 크기 조정 */
-  margin-left: 0.5rem; /* 텍스트와 아이콘 사이 간격 */
-  vertical-align: middle; /* 아이콘을 텍스트 중간에 맞춤 */
+h1 .version {
+  font-size: 0.3em;
+  font-weight: bold;
+  vertical-align: super;
+  color: #333;
+
+  margin-left: -3px;
 }
 
 .tagline {
+  font-weight: bold;
   font-size: 1.2rem;
   color: #666;
   margin-bottom: 2.5rem;
