@@ -1,0 +1,5 @@
+{
+  "build": {
+    "builder": "NIXPACKS" // 또는 이와 유사한 설정
+  }
+}
