@@ -10,7 +10,7 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 🔗 **데모 사이트**: [stomp-chat-server.up.railway.app](https://stomp-chat-server.up.railway.app/)
 
 #### 배포된 홈페이지 화면 ✅
-<img width="700" alt="image" src="https://github.com/user-attachments/assets/fa8a9d42-b20e-408c-96bd-5ef8da2f40e0" />
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/4186f731-2af9-4010-baa5-627c966f8f4b" />
 
 <details>
   <summary>채팅방 화면 ✅</summary>
