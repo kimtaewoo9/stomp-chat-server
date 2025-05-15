@@ -7,7 +7,7 @@
                     <v-btn :to="{path:'/groupchatting/list'}">채팅방목록</v-btn>
                 </v-col>
                 <v-col class="text-center">
-                    <v-btn :to="{path: '/'}">STOMP chat</v-btn>
+                    <v-btn :to="{path: '/'}">STOMPGRAM</v-btn>
                 </v-col>
                 <v-col class="d-flex justify-end">
                     <v-btn v-if="isLogin" :to="{path:'/my/chat/page'}" >MyChatPage</v-btn>
