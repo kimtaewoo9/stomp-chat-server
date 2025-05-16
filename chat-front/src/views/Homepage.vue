@@ -2,7 +2,7 @@
   <div class="home-container">
     <div class="intro-section">
       <h1>
-        eunbigram <sup class="version">V1</sup>
+        STOMPGRAM <sup class="version">V1</sup>
       </h1>
       <p class="tagline">A real-time communication platform</p>
       
