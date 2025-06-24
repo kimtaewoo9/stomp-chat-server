@@ -1,6 +1,6 @@
 ## 웹소켓/STOMP를 활용한 채팅서비스(spring, vue, redis)
 
-#### 📝 개요
+#### 개요
 Spring Boot와 Vue.js를 활용한 실시간 채팅 서비스로,
 
 웹소켓과 STOMP 프로토콜을 기반으로 1:1 채팅 및 그룹 채팅 기능을 제공합니다.
@@ -9,15 +9,15 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 
 🔗 **데모 사이트**: [stomp-chat-server.up.railway.app](https://stomp-chat-server.up.railway.app/)
 
-#### 홈페이지 화면 ✅
+#### 홈페이지 화면
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/4186f731-2af9-4010-baa5-627c966f8f4b" />
 
 <details>
-  <summary>채팅방 화면 ✅</summary>
+  <summary>채팅방 화면</summary>
     <img width="700" alt="image" src="https://github.com/user-attachments/assets/f6cfe899-0d43-4a49-a375-16ca61d6bdb8" />
 </details>
 
-## 🔧 기술 스택
+## SKILLS
 
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)
 ![Railway](https://img.shields.io/badge/Railway-0B0D0E?style=flat&logo=railway&logoColor=white)
