@@ -26,18 +26,16 @@ public class RedisConfig {
 
 	// 레디스에 연결하기 위한 연결 객체 .
 	@Bean
-	@Qualifier("chatPubSub") // 여러 개의 연결 객체를 만들 수 있음 . 또 다른 용도의 Redis 연결을 할때 .. @Qualifier 가 필요함 .
+	@Qualifier("chatPubSub")
 	public RedisConnectionFactory chatPubSubFactory() {
 		RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
 		configuration.setHostName(host);
 		configuration.setPort(port);
 
-		// lettuce -> 고성능 비동기 통신 기능 ..
 		return new LettuceConnectionFactory(configuration);
 	}
 
 	// publish 객체 .
-	// redis 서버와 통신 할 수 있는 사용하기 편리한, 전용도구 상자를 만들어서 spring 이 언제든 꺼 쓸 수 있도록 등록하는 과정 .
 	@Bean
 	@Qualifier("chatPubSub")
 	public StringRedisTemplate stringRedisTemplate(
@@ -45,14 +43,15 @@ public class RedisConfig {
 		return new StringRedisTemplate(redisConnectionFactory);
 	}
 
-	// subscribe 객체 .
+	// subscribe 객체 . 듣고(listener), 전달해서(adapter), 처리(service)
+	// 어떤 채널을 들을지 결정하고 메시지가 오는지 항상 귀 기울이며 대기함 .
 	@Bean
 	public RedisMessageListenerContainer redisMessageListenerContainer(
 		@Qualifier("chatPubSub") RedisConnectionFactory redisConnectionFactory,
 		MessageListenerAdapter messageListenerAdapter) {
 		RedisMessageListenerContainer container = new RedisMessageListenerContainer();
 		container.setConnectionFactory(redisConnectionFactory);
-		// listener 는 항상 chat 만 바라 보고 있다가 .. chat 이라는 토픽에 메시지가 들어오면 subscribe 함 .
+		// 앞으로 redis 서버에 chat 이라는 이름의 채널에서 오는 메시지를 듣겠다 .
 		container.addMessageListener(messageListenerAdapter, new PatternTopic("chat"));
 
 		return container;

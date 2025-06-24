@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class RedisPubSubService implements MessageListener {
 
+	// publish 객체 .
 	private final StringRedisTemplate stringRedisTemplate;
 
 	private final SimpMessageSendingOperations messageTemplate;
@@ -27,15 +28,17 @@ public class RedisPubSubService implements MessageListener {
 		stringRedisTemplate.convertAndSend(channel, message);
 	}
 
-	// onMessage 라는 메서드를 반드시 구현해야함 .
 	// redis 는 push 방식으로 .. 발행자가 메시지를 보내면 서버가 즉시 모든 구독자에게 메시지를 밀어줌.
 	// 메시지를 밀어주면 .이 onMessage 메서드를 통해 그 메시지를 받음 .
+	// redis 라는 거대한 방송망을 통해 전달된 메시지를 받아서, 실제 클라이언트들이 귀 기울이고 있는
+	// 개별 STOMP 채널로 재분배함 .. 어느 서버에 접속하더라도 모든 사용자가 끊김 없이 메시지를 주고 받을 수 있도록 .
 	@Override
 	public void onMessage(Message message, byte[] pattern) {
 		String payload = new String(message.getBody());
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			ChatMessageDto chatMessageDto = objectMapper.readValue(payload, ChatMessageDto.class);
+			// 최종적으로 stomp broker 에게 전달함 .
 			messageTemplate.convertAndSend("/topic/" + chatMessageDto.getRoomId(),
 				chatMessageDto);
 		} catch (JsonProcessingException e) {
