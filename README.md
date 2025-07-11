@@ -7,7 +7,7 @@ Spring Boot와 Vue.js를 활용한 실시간 채팅 서비스로,
 
 Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성을 고려한 설계를 적용했습니다.
 
-🔗 **데모 사이트**: ~~[stomp-chat-server.up.railway.app](https://stomp-chat-server.up.railway.app/)~~
+🔗 **데모 사이트**: ~~[stomp-chat-server.up.railway.app](https://stomp-chat-server.up.railway.app/)~~ ⚠️
 
 
 #### 홈페이지 화면
