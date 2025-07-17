@@ -58,7 +58,7 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 <img src="https://github.com/user-attachments/assets/ba2c82fe-d148-4289-aae5-449b1cc32d03" width="700" />
 
 - kafka pub/sub과의 차이점
-    - Redis는 더 빠른 성능 보장
+    - Redis는 더 빠른 성능
         - kafka는 디스크에 메시지를 저장하는데 반해, redis는 저장하지 않고 메모리 기반의 db로 더 빠른 성능 보장
     - kafka는 더 안정적인 메시징 처리
         - redis는 pub/sub과정에서 메시지를 저장하지 않기에, listen하는 서버가 없다면 메시지가 유실되는데 반해, kafka는 저장하여 추후에라도 전송 가능
@@ -73,3 +73,4 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 - 채팅방 비밀번호 기능
 - 토큰 만료 시 알림 후 로그인 화면으로 리다이렉트 
 - 날짜 구분선
+- ..
