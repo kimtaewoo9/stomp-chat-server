@@ -13,10 +13,8 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 #### 홈페이지 화면
 <img width="700" alt="image" src="https://github.com/user-attachments/assets/4186f731-2af9-4010-baa5-627c966f8f4b" />
 
-<details>
-  <summary>채팅방 화면</summary>
-    <img width="700" alt="image" src="https://github.com/user-attachments/assets/f6cfe899-0d43-4a49-a375-16ca61d6bdb8" />
-</details>
+#### 채팅방 화면
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/f6cfe899-0d43-4a49-a375-16ca61d6bdb8" />
 
 ## SKILLS
 
