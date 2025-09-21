@@ -35,7 +35,8 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
 
 
 ## 개발 주요 API 목록
-- stomp 통신 후 메시지 DB 저장
+- 로그인 기능(JWT 방식)
+- Oauth 기능 (네이버, 카카오, 구글로그인 기능)
 - 그룹채팅관련
   - 그룹채팅방 개설
   - 그룹채팅 목록조회
@@ -48,12 +49,17 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
   - 내 채팅방 목록조회
   - 채팅방 나가기
 
-## redis의 pub/sub을 활용한 다중채팅서버 확장성 설계
-#### redis pub/sub을 통해 멀티서버 환경 고려
-<img src="https://github.com/user-attachments/assets/87031ec1-c754-48b7-8dbf-9c7683ec8d74" width="700" />
+## Redis의 pub/sub 기능을 활용한 다중채팅서버 확장성 설계
+#### 멀티 서버에서 다른 서버에 있는 사용자에게 메시지를 전송할 수 없는 문제 발생
+<img width="563" height="292" alt="image" src="https://github.com/user-attachments/assets/61920562-b11c-4b9a-89cd-23b99db76e7a" />
 
-#### STOMP와 redis/pub sub을 활용여 아키텍처 설계
-<img src="https://github.com/user-attachments/assets/ba2c82fe-d148-4289-aae5-449b1cc32d03" width="700" />
+#### Redis Pub/Sub 기능을 활용한 아키텍처 설계
+<img width="575" height="175" alt="image" src="https://github.com/user-attachments/assets/4aaf3d0a-0b27-4039-9e95-829c5a7d307f" />
+
+<img width="575" height="196" alt="image" src="https://github.com/user-attachments/assets/cf3e1871-2796-4be9-9eb3-2cb16eea3966" />
+
+<img width="575" height="216" alt="image" src="https://github.com/user-attachments/assets/baba25c3-d374-4a65-ab45-15463dae0b52" />
+
 
 - kafka pub/sub과의 차이점
     - Redis는 더 빠른 성능
