@@ -1,19 +1,11 @@
 ## 웹소켓/STOMP를 활용한 채팅서비스 Stompgram(spring, vue, redis)
 
 #### 개요
-Spring Boot와 Vue.js를 활용한 실시간 채팅 서비스로,
-
-웹소켓과 STOMP 프로토콜을 기반으로 그룹채팅, 1대1 채팅 등의 기능을 제공합니다.
+Spring Boot와 Vue.js를 활용한 실시간 채팅 서비스로, 웹소켓과 STOMP 프로토콜을 기반으로 그룹채팅, 1대1 채팅 등의 기능을 제공합니다.
 
 Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성을 고려한 설계를 적용했습니다.
 
 🔗 **데모 사이트**: ~~[stomp-chat-server.up.railway.app](https://stomp-chat-server.up.railway.app/)~~ ⚠️
-
-#### 홈페이지 화면
-<img width="700" alt="image" src="https://github.com/user-attachments/assets/4186f731-2af9-4010-baa5-627c966f8f4b" />
-
-#### 채팅방 화면
-<img width="700" alt="image" src="https://github.com/user-attachments/assets/f6cfe899-0d43-4a49-a375-16ca61d6bdb8" />
 
 ## 🛠️ SKILLS
 
@@ -72,6 +64,12 @@ Redis의 pub/sub 기능을 활용하여 다중 서버 환경에서의 확장성�
         - kafka는 디스크에 메시지를 저장하는데 반해, redis는 저장하지 않고 메모리 기반의 db로 더 빠른 성능 보장
     - kafka는 더 안정적인 메시징 처리
         - redis는 pub/sub과정에서 메시지를 저장하지 않기에, listen하는 서버가 없다면 메시지가 유실되는데 반해, kafka는 저장하여 추후에라도 전송 가능
+
+#### 홈페이지 화면
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/4186f731-2af9-4010-baa5-627c966f8f4b" />
+
+#### 채팅방 화면
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/f6cfe899-0d43-4a49-a375-16ca61d6bdb8" />
 
 ## TODO
 - 바이너리 파일 첨부
